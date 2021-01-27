@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.NoticeMapper">
+
+
+<select id="maxNumNotice" resultType="int">
+	SELECT MAX(num) FROM notice  
+</select>
+
+<insert id="insertNotice">
+	INSERT INTO notice (num, title, content, reg_date) 
+	VALUES (#{num}, #{title}, #{content}, CURRENT_TIMESTAMP)
+</insert>
+
+<select id="getNotices" resultType="noticeDto">
+	SELECT * FROM notice ORDER BY num DESC 
+	LIMIT #{pageSize} OFFSET #{startRow}
+</select>
+
+<select id="getNoticeCount" resultType="int">
+	SELECT COUNT(*) FROM notice 
+</select>
+
+<select id="getNoticeByNum" resultType="noticeDto">
+	SELECT * FROM notice WHERE num = #{num} 
+</select>
+
+
+<update id="updateNotice">
+	UPDATE notice SET title = #{title}, content = #{content} 
+	WHERE num = #{num}
+</update>
+
+<delete id="deleteNotice">
+	DELETE FROM notice WHERE num = #{num} 
+</delete>
+
+<select id="countNoticeByNum" resultType="int">
+	SELECT COUNT(*) FROM notice WHERE num = #{num} 
+</select>
+
+<!-- replyInsert 생략됨 -->
+
+
+
+</mapper>

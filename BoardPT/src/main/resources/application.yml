@@ -1,0 +1,33 @@
+
+server:
+  port: 8086
+    
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+      
+    
+  datasource:
+    driver-class-name : org.h2.Driver
+    url               : jdbc:h2:C:/workspace/boardpt
+    username          : sa
+    password          : 
+  
+  h2:
+    console:
+      path    : /h2_console
+      enabled : true
+    
+mybatis:
+  type-aliases-package: com.board.dto
+  mapper-locations    : static/mapper/*.xml
+      
+      
+file:
+  path: C:\download\
+
+      
+      

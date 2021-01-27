@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.board.mapper.BoardMapper">
+
+
+<select id="maxNumBoard" resultType="int">
+	SELECT MAX(num) FROM bbs 
+</select>
+
+<insert id="insertBoard">
+	INSERT INTO bbs
+	(num, category, title, content, id, reg_date, hit, re_ref, re_lev, re_seq, ip, fileCount, commentCount)  
+	VALUES (#{num},#{category},#{title},#{content},#{id},CURRENT_TIMESTAMP,0,#{re_ref},0,0,#{ip},0,0)
+</insert>
+
+<!-- replyInsert 생략됨 -->
+
+<select id="getBoards" resultType="boardDto"><!-- getBoardsByCategory와 통합 -->
+	SELECT * FROM bbs 
+	<choose>
+	<when test="search != null and search != ''">
+		WHERE title LIKE CONCAT('%', #{search}, '%')
+		OR content LIKE CONCAT('%', #{search}, '%') 
+		<if test="category != null and category != ''">
+			AND category = #{category}
+		</if>
+	</when>
+	<otherwise>
+		<if test="category != null and category != ''">
+			WHERE category = #{category}
+		</if>
+	</otherwise>
+	</choose>
+<!-- 	<if test="search != null and search != ''"> -->
+<!-- 		WHERE title LIKE CONCAT('%', #{search}, '%') -->
+<!-- 		OR content LIKE CONCAT('%', #{search}, '%')  -->
+<!-- 		<if test="category != null and category != ''"> -->
+<!-- 			AND category = #{category} -->
+<!-- 		</if> -->
+<!-- 	</if> -->
+	ORDER BY re_ref DESC, re_lev ASC, re_seq ASC 
+	LIMIT #{pageSize} OFFSET #{startRow} 
+</select>
+
+<select id="getBoardsMain" resultType="boardDto">
+	SELECT * FROM bbs WHERE re_lev = 0
+	ORDER BY re_ref DESC
+	LIMIT #{pageSize} OFFSET #{startRow}
+</select>
+
+<select id="getBoardsOrderByHit" resultType="boardDto">
+	SELECT * FROM bbs ORDER BY hit DESC
+	LIMIT #{pageSizeHit}
+</select>
+
+<select id="getBoardCount" resultType="int"><!-- getCategoryCount와 통합 -->
+	SELECT COUNT(*) FROM bbs 
+	
+	<choose>
+	<when test="search != null and search != ''">
+		WHERE title LIKE CONCAT('%', #{search}, '%')
+		OR content LIKE CONCAT('%', #{search}, '%') 
+		<if test="category != null and category != ''">
+			AND category = #{category}
+		</if>
+	</when>
+	<otherwise>
+		<if test="category != null and category != ''">
+			WHERE category = #{category}
+		</if>
+	</otherwise>
+	</choose>
+	
+<!-- 	<if test="search != null and search != ''"> -->
+<!-- 		WHERE title LIKE CONCAT('%', #{search}, '%') -->
+<!-- 		OR content LIKE CONCAT('%', #{search}, '%')  -->
+<!-- 	</if> -->
+<!-- 	<if test="category != null and category != ''"> -->
+<!-- 		AND category = #{category} -->
+<!-- 	</if> -->
+</select>
+
+<!-- Board Detail -->
+<select id="getBoardByNum" resultType="boardDto">
+	SELECT * FROM bbs WHERE num = #{num} 
+</select>
+
+<update id="updateHit">
+	UPDATE bbs SET hit = hit + 1
+	WHERE num = #{num} 
+</update>
+<!-- Board Detail -->
+
+<update id="updateBoard" parameterType="boardDto">
+	UPDATE bbs
+	SET category = #{category}, title = #{title}, content = #{content} 
+	WHERE num = #{num}
+</update>
+
+<!-- DELETE BOARD -->
+<delete id="deleteBoard">
+	DELETE FROM bbs WHERE num = #{num}
+</delete>
+
+<select id="getCountFileByNum" resultType="int">
+	SELECT COUNT(num) FROM bbs_file WHERE num = #{num}
+</select>
+
+<delete id="deleteFileByNum">
+	DELETE FROM bbs_file WHERE num = #{num}
+</delete>
+
+<select id="getCountCommentByNum" resultType="int">
+	SELECT COUNT(num) FROM comment WHERE num = #{num}
+</select>
+
+<delete id="deleteCommentByNum">
+	DELETE FROM comment WHERE num = #{num}
+</delete>
+<!-- DELETE BOARD -->
+
+
+<!-- Comment -->
+<select id="getCommentByBoardNum" resultType="commentDto">
+	SELECT * FROM comment WHERE num = #{num}
+	ORDER BY commentId
+</select>
+
+<select id="getNumByCommentId" resultType="int">
+	SELECT num FROM comment WHERE commentId = #{commentId}
+</select>
+
+<insert id="insertComment">
+	INSERT INTO comment (commentId, num, id, content, reg_date) 
+	VALUES ((SELECT MAX(commentId)+1 FROM comment), #{num}, #{id}, #{content}, CURRENT_TIMESTAMP)
+</insert>
+
+<update id="commentCount">
+	UPDATE bbs 
+	SET commentCount = (SELECT COUNT(*) FROM comment WHERE num = #{num}) 
+	WHERE num = #{num}
+</update>
+
+<delete id="deleteComment">
+	DELETE FROM comment WHERE commentId = #{commentId} 
+</delete>
+
+<!-- Comment -->
+
+
+
+<!-- File -->
+<select id="selectFileByBoardNum" resultType="bbsFileDto">
+	SELECT * FROM bbs_file WHERE num = #{num} 
+	ORDER BY fileId
+</select>
+
+<select id="selectFileByFileId" resultType="bbsFileDto">
+	SELECT * FROM bbs_file WHERE fileId = #{fileId}
+</select>
+
+<!-- File -->
+
+
+
+</mapper>
