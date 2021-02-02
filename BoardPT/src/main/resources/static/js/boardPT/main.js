@@ -33,51 +33,61 @@ $(document).ready(function() {
 		var url		= $('#url').val();
 		
 		var param = {
-			"name"	: name,
-			"url"	: url
+			'name'	: name,
+			'url'	: url
 		};
 		$.ajax({
-			url: "siteProcess.do",
-			type: "post",
+			url: 'siteProcess.do',
+			type: 'post',
 			data: param,
 			success: function() {
 				listSite();
-				var name = document.querySelector("#name");
-				name.value = "";
-				var url = document.querySelector("#url");
-				url.value = "";
+				var name = document.querySelector('#name');
+				name.value = '';
+				var url = document.querySelector('#url');
+				url.value = '';
 			}
 		});
-		$addSite = $("#addSite").removeAttr("disabled");
+		$addSite = $('#addSite').removeAttr('disabled');
 	});
 });
 
 
 function listSite(){
 	$.ajax({
-		url: "siteList.do",
+		url: 'siteList.do',
 		success: function(result) {
-			var output = "";
+			
+			var $siteList	= $('#siteList').empty();
+			var $h2 		= $('<h2>');
+			var $a			= $('<a>');
+			var $inp		= $('<input>').attr('type','hidden');
+			var $img		= $('<img>').attr('src','images/close.png').attr('width','18px;');
+			var $h2Clone;
 			
 			for (var i in result) {
-				output += "<h2><a href='" + result[i].url + "' target='_blank'>" + result[i].siteName + "</a>&nbsp;&nbsp;&nbsp;&nbsp;";
-				output += "<input type='hidden' id='siteNum" + i + "' value='" + result[i].siteNum + "'>";
-				output += "<a style='cursor: pointer;' onclick='delSite(" + i + ")'><img src='images/close.png' width='18px;'></a></h2>";
+				$h2Clone = $h2.clone().appendTo($siteList);
+				$a.clone().attr('href',result[i].url).attr('target','_blank').attr('style','margin-right:2rem;').html(result[i].siteName).appendTo($h2Clone);
+				$inp.clone().attr('id','siteNum'+i).val(result[i].siteNum).appendTo($h2Clone);
+				$a.clone().attr('style','cursor: pointer;').attr('onclick','delSite('+i+')').html($img.clone()).appendTo($h2Clone);
+				
 			}
-			$("#siteList").html(output);
+			
 		}
 	});
+	
 }
 
+
 function delSite(i){
-	var id = "#siteNum" + i;
+	var id = '#siteNum' + i;
 	var siteNum = $(id).val();
 	console.log(siteNum);
 	var param = {
-		"siteNum": siteNum	
+		'siteNum': siteNum	
 	};
 	$.ajax({
-		url: "siteDelete.do",
+		url: 'siteDelete.do',
 		data: param,
 		success: function() {
 			listSite();
