@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
 		int check = userMapper.countUserById(id);
 		
 		if (check > 0) { // 해당 아이디가 이미 존재
+			log.info("아이디가 이미 존재합니다.");
 			return 0;
 		}
 		
