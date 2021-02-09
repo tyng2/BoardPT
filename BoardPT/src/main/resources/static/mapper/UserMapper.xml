@@ -47,5 +47,11 @@
 
 
 
+<insert id="insertLoginLog">
+	INSERT INTO login_log (id, ip, reg_date)
+	VALUES (#{id}, #{ip}, CURRENT_TIMESTAMP)
+</insert>
+
+
 
 </mapper>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
+<link rel="shortcut icon" href="/images/p.png">
 <link rel="stylesheet" href="/fonts/icomoon/style.css">
 <link rel="stylesheet" href="/fonts/flaticon/font/flaticon.css">
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -11,3 +12,4 @@
 <link rel="stylesheet" href="/css/aos.css">
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/custom.css">
+

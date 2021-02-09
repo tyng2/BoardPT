@@ -25,4 +25,8 @@ public interface UserMapper {
 	public int deleteUser(String id);
 	
 	
+	
+	
+	public int insertLoginLog(String id, String ip);
+	
 }
