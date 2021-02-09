@@ -109,6 +109,6 @@
 <jsp:include page="/WEB-INF/views/inc/bottom.jsp"></jsp:include>
 
 <%@ include file="/WEB-INF/views/inc/commonJS.jsp" %>
-<script src="/static/js/boardPT/board/boardView.js"></script>
+<script src="/js/boardPT/board/boardView.js"></script>
 </body>
 </html>

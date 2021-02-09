@@ -94,7 +94,7 @@ history.back();
 
 <jsp:include page="/WEB-INF/views/inc/bottom.jsp"></jsp:include>
 <%@ include file="/WEB-INF/views/inc/commonJS.jsp" %>
-<script src="/static/js/boardPT/user/login.js"></script>
+<script src="/js/boardPT/user/login.js"></script>
 <script>
 
 </script>
