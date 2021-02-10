@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.vo.UserVO"%>
+<%@page import="com.board.dto.UserDto"%>
 <!DOCTYPE html>
 <html lang="en"><!--  boardpage -->
 <head>
@@ -45,7 +45,7 @@ location.href="main.do";
 
 <!-- content -->
 <%
-	UserVO m = (UserVO) request.getAttribute("member");
+UserDto m = (UserDto) request.getAttribute("member");
 %>
 <section class="site-section bg-light">
 <div class="container">
@@ -63,17 +63,17 @@ location.href="main.do";
 						<label class="text-black" for="fname">Password</label><br>
 						<input type="text" name="pw" class="form-control" value="${member.password }">
 					</div>
-					<div class="col-md-6">
-						<label class="text-black" for="title">Gender</label><br>
-						<div class="form-check-inline">
-							<label class="customradio"><span class="radiotextsty">M</span>
-							<input type="radio" name="gender" value="M" <% if ("M".equals(m.getGender())) %>checked<% %>>
-							<span class="checkmark"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<label class="customradio"><span class="radiotextsty">W</span>
-							<input type="radio" name="gender" value="W" <% if ("W".equals(m.getGender())) %>checked<% %>>
-							<span class="checkmark"></span></label>
-						</div>
-					</div>
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<label class="text-black" for="title">Gender</label><br> -->
+<!-- 						<div class="form-check-inline"> -->
+<!-- 							<label class="customradio"><span class="radiotextsty">M</span> -->
+<%-- 							<input type="radio" name="gender" value="M" <% if ("M".equals(m.getGender())) %>checked<% %>> --%>
+<!-- 							<span class="checkmark"></span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+<!-- 							<label class="customradio"><span class="radiotextsty">W</span> -->
+<%-- 							<input type="radio" name="gender" value="W" <% if ("W".equals(m.getGender())) %>checked<% %>> --%>
+<!-- 							<span class="checkmark"></span></label> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 				</div>
 				
 				<div class="row form-group">

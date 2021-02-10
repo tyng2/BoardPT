@@ -47,7 +47,7 @@ history.back();
 	<div class="row" style="margin: 0 auto; max-width: 600px;">
 	<div style="width: 100%;">
 
-		<form action="/login.do" class="p-5 bg-white" method="POST">
+		<form action="/loginProcess.do" class="p-5 bg-white" method="POST">
 			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 			
 			<h2 class="h4 text-black mb-5">Login Form</h2>

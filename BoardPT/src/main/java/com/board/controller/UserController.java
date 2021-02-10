@@ -75,7 +75,7 @@ public class UserController {
 		return "user/login";
 	}
 	
-	@PostMapping("/login.do")
+//	@PostMapping("/loginProcess.do")
 	public ResponseEntity<String> loginProcess(@RequestParam Map<String, String> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		log.info("<< LoginProcess, POST >>");
 		
@@ -104,6 +104,7 @@ public class UserController {
 			res = Common.respEnt(null, "/");
 			
 		} else {			// 로그인 실패
+			System.out.println("로그인실패!"+check);
 			res = Common.respEnt("아이디나 비밀번호가 맞지 않습니다.", null);
 		}
 		
