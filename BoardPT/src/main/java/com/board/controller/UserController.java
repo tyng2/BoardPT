@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +29,7 @@ public class UserController {
 	private Logger log = LoggerFactory.getLogger(UserController.class);
 	
 //	@Autowired
-//	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
 	@Autowired
 	private UserService userService;
@@ -46,8 +47,8 @@ public class UserController {
 		ResponseEntity<String> res = null;
 		
 		String id 		= paramMap.get("id");
-		String pw 		= paramMap.get("pw");
-//		String pw 		= passwordEncoder.encode(paramMap.get("pw"));
+//		String pw 		= paramMap.get("pw");
+		String pw 		= passwordEncoder.encode(paramMap.get("pw"));
 		String name 	= paramMap.get("name");
 		String email 	= paramMap.get("email");
 		String address 	= paramMap.get("address");
