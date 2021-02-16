@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.comm.Common;
 import com.board.config.SecurityConfiguration;
@@ -71,6 +72,14 @@ public class UserController {
 		return res;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/idCheck")
+	public boolean idCheck(@RequestParam String userID) {
+		int check = userService.countUserById(userID);
+		System.out.println("ID:val//"+userID+":"+check);
+		
+		return (check > 0) ? true : false;
+	}
 	
 	@GetMapping("/login.do")
 	public String login() {

@@ -9,7 +9,7 @@
 	VALUES (#{id}, #{password}, #{name}, #{email}, #{address}, CURRENT_TIMESTAMP)
 </insert>
 
-<select id="countUserById" resultType="int">
+<select id="countUserById">
 	SELECT COUNT(*) FROM users WHERE id = #{id}
 </select>
 

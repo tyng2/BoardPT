@@ -26,8 +26,7 @@ spring:
 mybatis:
   type-aliases-package: com.board.dto
   mapper-locations    : static/mapper/*.xml
-      
-      
+  
 file:
   path: C:\download\
 

@@ -18,7 +18,7 @@ $(function() {
 		console.log('id : ' + id);
 		
 		$.ajax({
-			url: 'joinIdCheckJson.do', // 'joinIdCheckJson.do?userid=id입력값' - data속성 사용하지 않을 시
+			url: '/idCheck', // 'joinIdCheckJson.do?userid=id입력값' - data속성 사용하지 않을 시
 			data: {userID: id}, // userid = id입력값
 			success: function(isDup) {
 				console.log('result 변수 타입 : ' + typeof(isDup));
