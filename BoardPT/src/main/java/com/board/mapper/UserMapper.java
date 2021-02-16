@@ -27,6 +27,6 @@ public interface UserMapper {
 	
 	
 	
-	public int insertLoginLog(String id, String ip);
+	public int insertLoginReg(String id, String ip);
 	
 }

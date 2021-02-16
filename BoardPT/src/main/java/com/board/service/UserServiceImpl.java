@@ -5,8 +5,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.board.config.SecurityConfiguration;
 import com.board.dto.UserDto;
 import com.board.mapper.UserMapper;
 
@@ -15,8 +18,8 @@ public class UserServiceImpl implements UserService {
 	
 	private Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	
-//	@Autowired
-//	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder = SecurityConfiguration.getPasswordEncoder();
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -46,15 +49,19 @@ public class UserServiceImpl implements UserService {
 		int check 		= 0;
 		String password	= userMapper.getPasswordById(id);
 		
-//		if (passwordEncoder.matches(pw, password)) {
-//			check = 1;
-//		}
-		
-		if (pw.equals(password)) {
+		if (pwEncoder.matches(pw, password)) {
+			check = 1;
+		} else if (pw.equals(password)) {
 			check = 1;
 		}
 		
 		return check;
+	}
+
+	@Override
+	public int insertLoginReg(String id, String ip) {
+		log.info("IP :: {}", ip);
+		return userMapper.insertLoginReg(id, ip);
 	}
 
 	@Override

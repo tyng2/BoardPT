@@ -11,6 +11,8 @@ public interface UserService {
 	public int countUserById(String id);
 	
 	public int loginCheck(String id, String pw);
+
+	public int insertLoginReg(String id, String ip);
 	
 	public List<UserDto> getAllUsers(String search, int startRow, int pageSize);
 	

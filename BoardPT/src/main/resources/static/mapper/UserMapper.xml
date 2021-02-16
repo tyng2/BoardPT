@@ -5,20 +5,20 @@
 <mapper namespace="com.board.mapper.UserMapper"><!-- MemberDao.java 참조 -->
 
 <insert id="insertUser">
-	INSERT INTO user (id, password, name, email, address, reg_date) 
+	INSERT INTO users (id, password, name, email, address, reg_date) 
 	VALUES (#{id}, #{password}, #{name}, #{email}, #{address}, CURRENT_TIMESTAMP)
 </insert>
 
 <select id="countUserById" resultType="int">
-	SELECT COUNT(*) FROM user WHERE id = #{id}
+	SELECT COUNT(*) FROM users WHERE id = #{id}
 </select>
 
 <select id="getPasswordById" resultType="string">
-	SELECT password FROM user WHERE id = #{id}
+	SELECT password FROM users WHERE id = #{id}
 </select>
 
 <select id="getAllUsers">
-	SELECT * FROM user 
+	SELECT * FROM users 
 	<if test="id != null and id != ''">
 		WHERE id LIKE #{search}
 	</if>
@@ -32,13 +32,13 @@
 </select>
 
 <update id="updateUser"><!-- modifyMemeber -->
-	UPDATE user 
+	UPDATE users 
 	SET password = #{password}, name = #{name}, email = #{email}, address = #{address}
 	WHERE id = #{id} 
 </update>
 
 <delete id="deleteUser">
-	DELETE FROM user WHERE id = #{id}
+	DELETE FROM users WHERE id = #{id}
 </delete>
 
 <!-- batchDeleteMember -->
@@ -47,8 +47,8 @@
 
 
 
-<insert id="insertLoginLog">
-	INSERT INTO login_log (id, ip, reg_date)
+<insert id="insertLoginReg">
+	INSERT INTO login_reg (id, ip, reg_date)
 	VALUES (#{id}, #{ip}, CURRENT_TIMESTAMP)
 </insert>
 

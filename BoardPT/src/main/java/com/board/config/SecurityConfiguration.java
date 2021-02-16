@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -28,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.formLogin()
 				.loginPage("/login.do")
-				.loginProcessingUrl("/loginProcess.do")
+//				.loginProcessingUrl("/loginProcess.do")
 				.usernameParameter("id")
 				.passwordParameter("pw")
 				.successForwardUrl("/")
@@ -43,15 +42,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication().dataSource(dataSource)
-				.passwordEncoder(getPasswordEncoder())
-				.usersByUsernameQuery("SELECT id, password, name, email, address, reg_date FROM user WHERE id = ?");
+//		auth.jdbcAuthentication().dataSource(dataSource)
+//				.passwordEncoder(getPasswordEncoder())
+//				.usersByUsernameQuery("SELECT id, password, name, email, address, reg_date FROM users WHERE id = ?");
 	}
 
 
 
 	@Bean
-	public PasswordEncoder getPasswordEncoder() {
+	public static BCryptPasswordEncoder getPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	

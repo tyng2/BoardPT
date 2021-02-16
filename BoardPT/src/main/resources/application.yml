@@ -22,6 +22,7 @@ spring:
 #      settings:
 #        web-allow-others: true
     
+    
 mybatis:
   type-aliases-package: com.board.dto
   mapper-locations    : static/mapper/*.xml

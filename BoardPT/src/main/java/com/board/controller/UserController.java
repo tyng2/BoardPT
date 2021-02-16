@@ -10,9 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.board.comm.Common;
+import com.board.config.SecurityConfiguration;
 import com.board.dto.UserDto;
 import com.board.service.UserService;
 
@@ -28,11 +31,11 @@ public class UserController {
 
 	private Logger log = LoggerFactory.getLogger(UserController.class);
 	
-//	@Autowired
-	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder = SecurityConfiguration.getPasswordEncoder();
 	
 	@GetMapping("/join.do")
 	public String joinForm() {
@@ -47,14 +50,13 @@ public class UserController {
 		ResponseEntity<String> res = null;
 		
 		String id 		= paramMap.get("id");
-//		String pw 		= paramMap.get("pw");
-		String pw 		= passwordEncoder.encode(paramMap.get("pw"));
+		String pw 		= pwEncoder.encode(paramMap.get("pw"));
 		String name 	= paramMap.get("name");
 		String email 	= paramMap.get("email");
 		String address 	= paramMap.get("address");
 		
 		UserDto user = new UserDto(id, pw, name, email, address);
-		
+		log.info("USER JOIN::{}", user.toString());
 		int check = userService.insertUser(user);
 		System.out.println("check:"+check);
 		
@@ -76,7 +78,7 @@ public class UserController {
 		return "user/login";
 	}
 	
-//	@PostMapping("/loginProcess.do")
+	@PostMapping("/loginProcess")
 	public ResponseEntity<String> loginProcess(@RequestParam Map<String, String> paramMap, HttpServletRequest request, HttpServletResponse response) {
 		log.info("<< LoginProcess, POST >>");
 		
@@ -103,6 +105,7 @@ public class UserController {
 			}
 			
 			res = Common.respEnt(null, "/");
+			userService.insertLoginReg(id, request.getRemoteAddr());
 			
 		} else {			// 로그인 실패
 			System.out.println("로그인실패!"+check);
