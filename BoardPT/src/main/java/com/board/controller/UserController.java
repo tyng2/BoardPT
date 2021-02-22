@@ -36,7 +36,7 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
-	private BCryptPasswordEncoder pwEncoder = SecurityConfiguration.getPasswordEncoder();
+	private BCryptPasswordEncoder pwEncoder;
 	
 	@GetMapping("/join.do")
 	public String joinForm() {

@@ -133,7 +133,9 @@ textarea {
 	resize: none;
 }
 
-
+.noticeList{
+	padding-left: 7rem;	
+}
 
 
 /* Checkbox */

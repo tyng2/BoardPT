@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	private Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 	
 	@Autowired
-	private BCryptPasswordEncoder pwEncoder = SecurityConfiguration.getPasswordEncoder();
+	private BCryptPasswordEncoder pwEncoder;
 	
 	@Autowired
 	private UserMapper userMapper;

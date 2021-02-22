@@ -27,6 +27,17 @@ mybatis:
   type-aliases-package: com.board.dto
   mapper-locations    : static/mapper/*.xml
   
+logging:
+  file:
+    path        : /log
+    max-size    : 100MB
+    max-history : 1
+  pattern:
+    console: "%-5level- %d{yyyy-MM-dd HH:mm:ss.SSS} %-40.40logger :: %msg%n"
+#    console: "%-5level- %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{3} :: %msg%n"
+    file: "LogFile_%d{yyyy-MM-dd}.log"
+  
+  
 file:
   path: C:\download\
 

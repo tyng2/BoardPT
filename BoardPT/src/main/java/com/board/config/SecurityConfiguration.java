@@ -16,8 +16,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 	
-	
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable();
@@ -39,14 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //		auth.jdbcAuthentication().dataSource(dataSource)
 //				.passwordEncoder(getPasswordEncoder())
 //				.usersByUsernameQuery("SELECT id, password, name, email, address, reg_date FROM users WHERE id = ?");
 	}
-
 
 
 	@Bean

@@ -134,7 +134,7 @@
 </section>
 
 
-<section class="site-section">
+<section class="site-section noticeList">
 <div class="container">
 	<div class="row">
 	<c:forEach items="${noticeList }" var="n">

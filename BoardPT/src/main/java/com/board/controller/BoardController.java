@@ -38,7 +38,7 @@ import com.board.service.BoardService;
 
 @Controller
 public class BoardController {
-	private final static int PAGE_SIZE = 8, PAGE_BLOCK_SIZE = 7, HIT_PAGE_SIZE = 5;
+	private final static int PAGE_SIZE = 8, PAGE_BLOCK_SIZE = 5, HIT_PAGE_SIZE = 5;
 	// PAGE_SIZE : 한 페이지의 게시글 개수, PAGE_BLOCK_SIZE : 한 페이지 블록을 구성하는 페이지 개수
 	// HIT_PAGE_SIZE : 조회수 순으로 정렬한 게시글이 페이지에 노출되는 개수
 	
