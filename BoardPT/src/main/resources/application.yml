@@ -10,18 +10,34 @@ spring:
       suffix: .jsp
     
   datasource:
-    driver-class-name : org.h2.Driver
-    url               : jdbc:h2:C:/workspace/boardpt
-    username          : sa
-    password          : 
+#    driver-class-name : org.h2.Driver
+#    url               : jdbc:h2:C:/workspace/boardpt
+#    username          : sa
+#    password          : 
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:tcp://localhost/~/../../workspace/boardpt
+      username: sa
+      password: 
+      maximum-pool-size: 30
+      minimum-idle: 5
+      
   
-  h2:
-    console:
-      enabled: true
-      path    : /h2-console
+#  h2:
+#    console:
+#      enabled: true
+#      path    : /h2-console
 #      settings:
 #        web-allow-others: true
-    
+
+  servlet:
+    multipart:
+      enabled: true
+      location: /download
+      max-file-size: 100MB
+       
+      
+      
     
 mybatis:
   type-aliases-package: com.board.dto
@@ -32,14 +48,15 @@ logging:
     path        : /log
     max-size    : 100MB
     max-history : 1
+    
   pattern:
-    console: "%-5level- %d{yyyy-MM-dd HH:mm:ss.SSS} %-40.40logger :: %msg%n"
+    console: "%-5level %d{HH:mm:ss.SSS} [%-40.40logger] %-3L / %-15.15M : %m%n"
 #    console: "%-5level- %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{3} :: %msg%n"
     file: "LogFile_%d{yyyy-MM-dd}.log"
   
   
 file:
-  path: C:\download\
+  path: classpath:download
 
       
       

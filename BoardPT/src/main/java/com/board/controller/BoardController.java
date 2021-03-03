@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.board.comm.Common;
@@ -94,10 +95,13 @@ public class BoardController {
 	}
 	
 	
-	/*
 	@PostMapping("/boardWriteProcess.do")
-	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, HttpServletRequest request, Model model) throws IOException {
-		log.info("<< POST, boardWriteProcess.do >>");
+	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam("bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
+		log.info("<< POST, boardWriteProcess.do >> : {}", paramMap);
+		
+		for (MultipartFile multipartFile : mFile) {
+			System.out.println(multipartFile.getOriginalFilename());
+		}
 		
 		File dir = new File(filePath);
 		if (!dir.exists()) {
@@ -105,14 +109,15 @@ public class BoardController {
 			log.info(filePath + " 디렉터리 생성!");
 		}
 		
+		BoardDto boardVO = new BoardDto();
+		boardVO.setId(paramMap.get("userId"));
+		boardVO.setCategory(paramMap.get("categy"));
+		boardVO.setTitle(paramMap.get("title"));
+		boardVO.setContent(paramMap.get("content"));
+		boardVO.setIp(request.getRemoteAddr());
+		/*
 		MultipartRequest mRequest = new MultipartRequest(request, filePath, MAX_FILE_SIZE, "UTF-8", new DefaultFileRenamePolicy());
 		
-		BoardDto boardVO = new BoardDto();
-		boardVO.setId(mRequest.getParameter("userId"));
-		boardVO.setCategory(mRequest.getParameter("categy"));
-		boardVO.setTitle(mRequest.getParameter("title"));
-		boardVO.setContent(mRequest.getParameter("content"));
-		boardVO.setIp(request.getRemoteAddr());
 		
 		List<BbsFileDto> fileList = new ArrayList<BbsFileDto>();
 		
@@ -140,10 +145,10 @@ public class BoardController {
 			fileList.add(bbsFileVO);
 			log.info("BbsFile/" + bbsFileVO);
 		}
+		 */
 		
 		return "redirect:/board.do";
 	}
-	*/
 	
 	@GetMapping("/boardView.do")
 	public String boardView(@RequestParam Map<String, String> paramMap, HttpServletRequest request, Model model) {

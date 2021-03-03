@@ -89,7 +89,8 @@ String category = (String) request.getParameter("category");
 				
 				</div>
 				<div id="file_add_form" >
-					<input type="file" name='bbs_file1' class="form-control" >
+					<input type="file" name='bbs_file' class="form-control" >
+<!-- 					<input type="file" name='bbs_file1' class="form-control" > -->
 				</div>
 			</div>
 		</div>
@@ -134,7 +135,8 @@ function file_add(size, ext) {
 		var obj = document.createElement("input");
 		obj.setAttribute("type", "file");
 		//obj.setAttribute("size", size);
-		obj.setAttribute("name", "bbs_file" + (filecountTemp + 1));
+		obj.setAttribute("name", "bbs_file");
+// 		obj.setAttribute("name", "bbs_file" + (filecountTemp + 1));
 		obj.setAttribute("class", "form-control");
 		obj.setAttribute("id", "file" + (filecountTemp + 1));
 		parents.appendChild(obj);
