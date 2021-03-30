@@ -1,6 +1,6 @@
 
 server:
-  port: 8086
+  port: 8080
     
 
 spring:
@@ -10,17 +10,25 @@ spring:
       suffix: .jsp
     
   datasource:
+    driver-class-name : org.mariadb.jdbc.Driver
+    url               : jdbc:mariadb://10.0.0.2:3306/boardpt
+    username          : root
+    password          : root
 #    driver-class-name : org.h2.Driver
 #    url               : jdbc:h2:C:/workspace/boardpt
 #    username          : sa
 #    password          : 
-    hikari:
-      driver-class-name: org.h2.Driver
-      jdbc-url: jdbc:h2:tcp://localhost/~/../../workspace/boardpt
-      username: sa
-      password: 
-      maximum-pool-size: 30
-      minimum-idle: 5
+#    hikari:
+#      driver-class-name: org.mariadb.jdbc.Driver
+#      jdbc-url: jdbc:mariadb://10.0.0.2:3306/boardpt
+#      username: root
+#      password: root
+#      driver-class-name: org.h2.Driver
+#      jdbc-url: jdbc:h2:tcp://localhost/~/../../workspace/boardpt
+#      username: sa
+#      password: 
+#      maximum-pool-size: 30
+#      minimum-idle: 5
       
   
 #  h2:
@@ -33,7 +41,7 @@ spring:
   servlet:
     multipart:
       enabled: true
-      location: /download
+      location: download
       max-file-size: 100MB
        
       
@@ -45,14 +53,13 @@ mybatis:
   
 logging:
   file:
-    path        : /log
-    max-size    : 100MB
-    max-history : 1
-    
-  pattern:
-    console: "%-5level %d{HH:mm:ss.SSS} [%-40.40logger] %-3L / %-15.15M : %m%n"
-#    console: "%-5level- %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{3} :: %msg%n"
-    file: "LogFile_%d{yyyy-MM-dd}.log"
+    path        : logging
+#    max-size    : 100MB
+#    max-history : 1
+#    
+#  pattern:
+#    console: "%-5level %d{HH:mm:ss.SSS} [%-40.40logger] %-3L / %-15.15M : %m%n"
+#    file: "LogFile_%d{yyyy-MM-dd}.log"
   
   
 file:

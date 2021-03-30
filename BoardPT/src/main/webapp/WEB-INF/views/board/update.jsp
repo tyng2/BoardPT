@@ -1,4 +1,4 @@
-<%@page import="com.vo.BoardVO"%>
+<%@page import="com.board.dto.BoardDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
 
 <!-- content -->
 <%
-	BoardVO b = (BoardVO) request.getAttribute("board");
+	BoardDto b = (BoardDto) request.getAttribute("board");
 %>
 <section class="site-section bg-light">
 <div class="container">

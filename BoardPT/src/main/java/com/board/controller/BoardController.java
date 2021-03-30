@@ -182,6 +182,9 @@ public class BoardController {
 		log.info("<< boardFile >> {}", fileId);
 		log.info("FilePath {}", filePath);
 		
+		log.info("아직 파일 다운로드 진행되지 않음!");
+		
+		/*
 		BbsFileDto file = boardService.selectFileByFileId(fileId);
 		
 		String fileName = file.getOrgl_file_nm();
@@ -221,6 +224,7 @@ public class BoardController {
 				}
 			}
 		}
+		*/
 		
 		
 		return "";

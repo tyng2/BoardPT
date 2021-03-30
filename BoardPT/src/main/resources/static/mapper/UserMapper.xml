@@ -9,7 +9,7 @@
 	VALUES (#{id}, #{password}, #{name}, #{email}, #{address}, CURRENT_TIMESTAMP)
 </insert>
 
-<select id="countUserById">
+<select id="countUserById" resultType="int">
 	SELECT COUNT(*) FROM users WHERE id = #{id}
 </select>
 
@@ -17,7 +17,7 @@
 	SELECT password FROM users WHERE id = #{id}
 </select>
 
-<select id="getAllUsers">
+<select id="getAllUsers" resultType="userDto">
 	SELECT * FROM users 
 	<if test="id != null and id != ''">
 		WHERE id LIKE #{search}
@@ -27,7 +27,7 @@
 
 <!-- getMemberCount -->
 
-<select id="getUserById">
+<select id="getUserById" resultType="userDto">
 	SELECT * FROM member WHERE id = #{id}
 </select>
 

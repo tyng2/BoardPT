@@ -113,38 +113,38 @@
 </delete>
 
 <select id="getCountCommentByNum" resultType="int">
-	SELECT COUNT(num) FROM comment WHERE num = #{num}
+	SELECT COUNT(num) FROM comments WHERE num = #{num}
 </select>
 
 <delete id="deleteCommentByNum">
-	DELETE FROM comment WHERE num = #{num}
+	DELETE FROM comments WHERE num = #{num}
 </delete>
 <!-- DELETE BOARD -->
 
 
 <!-- Comment -->
 <select id="getCommentByBoardNum" resultType="commentDto">
-	SELECT * FROM comment WHERE num = #{num}
+	SELECT * FROM comments WHERE num = #{num}
 	ORDER BY commentId
 </select>
 
 <select id="getNumByCommentId" resultType="int">
-	SELECT num FROM comment WHERE commentId = #{commentId}
+	SELECT num FROM comments WHERE commentId = #{commentId}
 </select>
 
 <insert id="insertComment">
-	INSERT INTO comment (commentId, num, id, content, reg_date) 
-	VALUES ((SELECT MAX(commentId)+1 FROM comment), #{num}, #{id}, #{content}, CURRENT_TIMESTAMP)
+	INSERT INTO comments (commentId, num, id, content, reg_date) 
+	VALUES ((SELECT MAX(commentId)+1 FROM comments), #{num}, #{id}, #{content}, CURRENT_TIMESTAMP)
 </insert>
 
 <update id="commentCount">
 	UPDATE bbs 
-	SET commentCount = (SELECT COUNT(*) FROM comment WHERE num = #{num}) 
+	SET commentCount = (SELECT COUNT(*) FROM comments WHERE num = #{num}) 
 	WHERE num = #{num}
 </update>
 
 <delete id="deleteComment">
-	DELETE FROM comment WHERE commentId = #{commentId} 
+	DELETE FROM comments WHERE commentId = #{commentId} 
 </delete>
 
 <!-- Comment -->
