@@ -3,23 +3,21 @@ package com.board.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.board.dto.NoticeDto;
-import com.board.dto.SiteDto;
+import com.board.dto.Site;
 
 @Mapper
 @Repository
 public interface SiteMapper {
 
 	
-	public List<SiteDto> getSiteList(String id);
+	public List<Site> getSiteList(String user_id);
 	
 	public int getMaxSite();
 	
-	public int insertSite(SiteDto site);
+	public int insertSite(Site site);
 	
-	public int deleteSite(int siteNum);
+	public int deleteSite(int site_numb);
 
 }

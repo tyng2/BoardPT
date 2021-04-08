@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.board.dto.NoticeDto;
+import com.board.dto.Notice;
 import com.board.service.NoticeService;
 
 @Controller
@@ -36,7 +36,7 @@ public class NoticeController {
 		pageMap.put("pageSizeHit", HIT_PAGE_SIZE);
 		
 		Map<String, Object> result = noticeService.getNotices(pageMap, paramMap);
-		List<NoticeDto> noticeList = (List<NoticeDto>) result.get("noticeList");
+		List<Notice> noticeList = (List<Notice>) result.get("noticeList");
 		Map<String, Integer> pageInfoMap = (Map<String, Integer>) result.get("pageInfoMap");
 		
 		model.addAttribute("pageInfoMap",pageInfoMap);

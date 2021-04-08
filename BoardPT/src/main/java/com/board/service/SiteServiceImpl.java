@@ -7,7 +7,7 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.board.dto.SiteDto;
+import com.board.dto.Site;
 import com.board.mapper.SiteMapper;
 
 @Service
@@ -18,18 +18,18 @@ public class SiteServiceImpl implements SiteService {
 
 	@Override
 	public JSONArray getSiteList(String id) {
-		List<SiteDto> list = siteMapper.getSiteList(id);
+		List<Site> list = siteMapper.getSiteList(id);
 		
 		JSONArray jArr	= new JSONArray();
 		JSONObject jObj	= null;
 		
-		for(SiteDto site : list) {
+		for(Site site : list) {
 			jObj = new JSONObject();
 			
-			jObj.put("siteNum",		site.getSiteNum());
-			jObj.put("siteName",	site.getSiteName());
-			jObj.put("url",			site.getUrl());
-			jObj.put("id", 			site.getId());
+			jObj.put("siteNum",		site.getSite_numb());
+			jObj.put("siteName",	site.getSite_name());
+			jObj.put("url",			site.getSite_url());
+			jObj.put("id", 			site.getUser_id());
 			
 			jArr.add(jObj);
 			
@@ -39,10 +39,10 @@ public class SiteServiceImpl implements SiteService {
 	}
 
 	@Override
-	public int insertSite(SiteDto site) {
+	public int insertSite(Site site) {
 		
 		int siteNum = siteMapper.getMaxSite();
-		site.setSiteNum(++siteNum);
+		site.setSite_numb(++siteNum);
 		
 		return siteMapper.insertSite(site);
 	}

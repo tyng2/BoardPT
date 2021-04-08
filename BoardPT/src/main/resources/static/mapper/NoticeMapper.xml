@@ -6,39 +6,39 @@
 
 
 <select id="maxNumNotice" resultType="int">
-	SELECT MAX(num) FROM notice  
+	SELECT MAX(noti_numb) FROM potl_noti  
 </select>
 
-<insert id="insertNotice">
-	INSERT INTO notice (num, title, content, reg_date) 
-	VALUES (#{num}, #{title}, #{content}, CURRENT_TIMESTAMP)
+<insert id="insertNotice" parameterType="notice">
+	INSERT INTO potl_noti (noti_numb, noti_titl, noti_cont, noti_date) 
+	VALUES (#{noti_numb}, #{noti_titl}, #{noti_cont}, CURRENT_TIMESTAMP)
 </insert>
 
-<select id="getNotices" resultType="noticeDto">
-	SELECT * FROM notice ORDER BY num DESC 
+<select id="getNotices" resultType="notice">
+	SELECT * FROM potl_noti ORDER BY noti_numb DESC 
 	LIMIT #{pageSize} OFFSET #{startRow}
 </select>
 
 <select id="getNoticeCount" resultType="int">
-	SELECT COUNT(*) FROM notice 
+	SELECT COUNT(noti_numb) FROM potl_noti 
 </select>
 
-<select id="getNoticeByNum" resultType="noticeDto">
-	SELECT * FROM notice WHERE num = #{num} 
+<select id="getNoticeByNum" resultType="notice">
+	SELECT * FROM potl_noti WHERE noti_numb = #{noti_numb} 
 </select>
 
 
-<update id="updateNotice">
-	UPDATE notice SET title = #{title}, content = #{content} 
-	WHERE num = #{num}
+<update id="updateNotice" parameterType="notice">
+	UPDATE potl_noti SET noti_titl = #{noti_titl}, noti_cont = #{noti_cont} 
+	WHERE noti_numb = #{noti_numb}
 </update>
 
 <delete id="deleteNotice">
-	DELETE FROM notice WHERE num = #{num} 
+	DELETE FROM potl_noti WHERE noti_numb = #{noti_numb} 
 </delete>
 
 <select id="countNoticeByNum" resultType="int">
-	SELECT COUNT(*) FROM notice WHERE num = #{num} 
+	SELECT COUNT(noti_numb) FROM potl_noti WHERE noti_numb = #{noti_numb} 
 </select>
 
 <!-- replyInsert 생략됨 -->

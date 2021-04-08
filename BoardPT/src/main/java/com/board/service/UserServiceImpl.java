@@ -10,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.board.config.SecurityConfiguration;
-import com.board.dto.UserDto;
+import com.board.dto.User;
 import com.board.mapper.UserMapper;
 
 @Service
@@ -25,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public int insertUser(UserDto userVO) {
-		String id = userVO.getId();
+	public int insertUser(User userVO) {
+		String id = userVO.getUser_id();
 		int check = userMapper.countUserById(id);
 		
 		if (check > 0) { // 해당 아이디가 이미 존재
@@ -65,19 +65,19 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> getAllUsers(String search, int startRow, int pageSize) {
+	public List<User> getAllUsers(String search, int startRow, int pageSize) {
 
 		return null;
 	}
 
 	@Override
-	public UserDto getUserById(String id) {
+	public User getUserById(String id) {
 
 		return null;
 	}
 
 	@Override
-	public int updateUser(UserDto userVO) {
+	public int updateUser(User userVO) {
 
 		return 0;
 	}

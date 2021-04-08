@@ -32,9 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.board.comm.Common;
-import com.board.dto.BbsFileDto;
-import com.board.dto.BoardDto;
-import com.board.dto.CommentDto;
+import com.board.dto.Board;
+import com.board.dto.Comment;
 import com.board.service.BoardService;
 
 @Controller
@@ -68,11 +67,11 @@ public class BoardController {
 		paramMap.put("category", category);
 		
 		Map<String, Object> result			= boardService.getBoards(pageMap, paramMap);
-		List<BoardDto> boardList			= (List<BoardDto>) result.get("boardList");
+		List<Board> boardList			= (List<Board>) result.get("boardList");
 		Map<String, Integer> pageInfoMap	= (Map<String, Integer>) result.get("pageInfoMap");
 		
 		
-		List<BoardDto> hitList = boardService.getBoardsOrderByHit(HIT_PAGE_SIZE);
+		List<Board> hitList = boardService.getBoardsOrderByHit(HIT_PAGE_SIZE);
 		
 		model.addAttribute("pageInfoMap"	, pageInfoMap);
 		model.addAttribute("list"			, boardList);
@@ -109,12 +108,13 @@ public class BoardController {
 			log.info(filePath + " 디렉터리 생성!");
 		}
 		
-		BoardDto boardVO = new BoardDto();
-		boardVO.setId(paramMap.get("userId"));
-		boardVO.setCategory(paramMap.get("categy"));
-		boardVO.setTitle(paramMap.get("title"));
-		boardVO.setContent(paramMap.get("content"));
-		boardVO.setIp(request.getRemoteAddr());
+		Board board = new Board();
+		
+		board.setUser_id(paramMap.get("userId"));
+		board.setBord_catg(paramMap.get("categy"));
+		board.setBord_titl(paramMap.get("title"));
+		board.setBord_cont(paramMap.get("content"));
+		board.setBord_wrip(request.getRemoteAddr());
 		/*
 		MultipartRequest mRequest = new MultipartRequest(request, filePath, MAX_FILE_SIZE, "UTF-8", new DefaultFileRenamePolicy());
 		
@@ -245,17 +245,17 @@ public class BoardController {
 		return jArr;
 	}
 	
-	public JSONArray commentToJsonArr(List<CommentDto> list) {
+	public JSONArray commentToJsonArr(List<Comment> list) {
 		JSONArray jArr	= new JSONArray();
 		JSONObject jObj	= null;
 		
-		for (CommentDto comm : list) {
+		for (Comment comm : list) {
 			jObj = new JSONObject();
-			jObj.put("commentId", comm.getCommentId());
-			jObj.put("num", comm.getNum());
-			jObj.put("id", comm.getId());
-			jObj.put("content", comm.getContent());
-			jObj.put("reg_date", comm.getReg_date());
+			jObj.put("commentId"	, comm.getComm_numb());
+			jObj.put("num"			, comm.getBord_numb());
+			jObj.put("id"			, comm.getUser_id());
+			jObj.put("content"		, comm.getComm_cont());
+			jObj.put("reg_date"		, comm.getComm_date());
 			
 			jArr.add(jObj);
 		}
@@ -278,10 +278,10 @@ public class BoardController {
 		int num 		= Integer.parseInt(paramMap.get("num"));
 		String content 	= paramMap.get("content");
 		
-		CommentDto comment = new CommentDto();
-		comment.setNum(num);
-		comment.setId(id);
-		comment.setContent(content);
+		Comment comment = new Comment();
+		comment.setBord_numb(num);
+		comment.setUser_id(id);
+		comment.setComm_cont(content);
 		
 		boardService.insertComment(comment);
 		

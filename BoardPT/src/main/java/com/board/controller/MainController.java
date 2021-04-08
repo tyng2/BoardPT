@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.comm.Common;
-import com.board.dto.BoardDto;
-import com.board.dto.NoticeDto;
-import com.board.dto.SiteDto;
+import com.board.dto.Board;
+import com.board.dto.Notice;
+import com.board.dto.Site;
 import com.board.service.BoardService;
 import com.board.service.NoticeService;
 import com.board.service.SiteService;
@@ -53,8 +53,8 @@ public class MainController {
 	@RequestMapping("/main.do")
 	public String main(Model model) {
 		log.info("main.do");
-		List<BoardDto> boardList 	= boardService.getBoardsMain(BOARD_PAGE_SIZE, BOARD_START_ROW);
-		List<NoticeDto> noticeList 	= noticeService.getNoticeList(NOTICE_PAGE_SIZE, NOTICE_START_ROW);
+		List<Board> boardList 	= boardService.getBoardsMain(BOARD_PAGE_SIZE, BOARD_START_ROW);
+		List<Notice> noticeList 	= noticeService.getNoticeList(NOTICE_PAGE_SIZE, NOTICE_START_ROW);
 		
 		model.addAttribute("boardList"	, boardList);
 		model.addAttribute("noticeList"	, noticeList);
@@ -98,10 +98,10 @@ public class MainController {
 			return Common.respEnt("내용을 입력해주세요.", null);
 		}
 		
-		SiteDto site = new SiteDto();
-		site.setId(sessionID);
-		site.setSiteName(name);
-		site.setUrl(url);
+		Site site = new Site();
+		site.setUser_id(sessionID);
+		site.setSite_name(name);
+		site.setSite_url(url);
 		
 		siteService.insertSite(site);
 		

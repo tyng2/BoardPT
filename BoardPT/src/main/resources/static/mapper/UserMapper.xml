@@ -5,40 +5,40 @@
 <mapper namespace="com.board.mapper.UserMapper"><!-- MemberDao.java 참조 -->
 
 <insert id="insertUser">
-	INSERT INTO users (id, password, name, email, address, reg_date) 
-	VALUES (#{id}, #{password}, #{name}, #{email}, #{address}, CURRENT_TIMESTAMP)
+	INSERT INTO potl_user (user_id, user_pass, user_name, user_mail, user_addr, user_date) 
+	VALUES (#{user_id}, #{user_pass}, #{user_name}, #{user_mail}, #{user_addr}, CURRENT_TIMESTAMP)
 </insert>
 
 <select id="countUserById" resultType="int">
-	SELECT COUNT(*) FROM users WHERE id = #{id}
+	SELECT COUNT(*) FROM potl_user WHERE user_id = #{user_id}
 </select>
 
 <select id="getPasswordById" resultType="string">
-	SELECT password FROM users WHERE id = #{id}
+	SELECT user_pass FROM potl_user WHERE user_id = #{user_id}
 </select>
 
-<select id="getAllUsers" resultType="userDto">
-	SELECT * FROM users 
-	<if test="id != null and id != ''">
-		WHERE id LIKE #{search}
+<select id="getAllUsers" resultType="user">
+	SELECT * FROM potl_user 
+	<if test="user_id != null and user_id != ''">
+		WHERE user_id LIKE #{search}
 	</if>
-	ORDER BY id OFFSET #{startRow} LIMIT #{pageSize}
+	ORDER BY user_id OFFSET #{startRow} LIMIT #{pageSize}
 </select>
 
 <!-- getMemberCount -->
 
-<select id="getUserById" resultType="userDto">
-	SELECT * FROM member WHERE id = #{id}
+<select id="getUserById" resultType="user">
+	SELECT * FROM member WHERE user_id = #{user_id}
 </select>
 
 <update id="updateUser"><!-- modifyMemeber -->
-	UPDATE users 
-	SET password = #{password}, name = #{name}, email = #{email}, address = #{address}
-	WHERE id = #{id} 
+	UPDATE potl_user 
+	SET user_pass = #{user_pass}, user_name = #{user_name}, user_mail = #{user_mail}, user_addr = #{user_addr}
+	WHERE user_id = #{user_id} 
 </update>
 
 <delete id="deleteUser">
-	DELETE FROM users WHERE id = #{id}
+	DELETE FROM potl_user WHERE user_id = #{user_id}
 </delete>
 
 <!-- batchDeleteMember -->
@@ -48,8 +48,11 @@
 
 
 <insert id="insertLoginReg">
-	INSERT INTO login_reg (id, ip, reg_date)
-	VALUES (#{id}, #{ip}, CURRENT_TIMESTAMP)
+	INSERT INTO logn_regi (logn_numb, logn_id, logn_ip, logn_date)
+	VALUES ( 
+		IFNULL((SELECT MAX(lore.logn_numb)+1 FROM logn_regi lore),1), 
+		#{logn_id}, #{logn_ip}, CURRENT_TIMESTAMP
+	)
 </insert>
 
 

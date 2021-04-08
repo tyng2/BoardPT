@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.board.comm.Common;
 import com.board.config.SecurityConfiguration;
-import com.board.dto.UserDto;
+import com.board.dto.User;
 import com.board.service.UserService;
 
 @Controller
@@ -56,7 +56,13 @@ public class UserController {
 		String email 	= paramMap.get("email");
 		String address 	= paramMap.get("address");
 		
-		UserDto user = new UserDto(id, pw, name, email, address);
+		User user = new User();
+		user.setUser_id(id);
+		user.setUser_pass(pw);
+		user.setUser_name(name);
+		user.setUser_mail(email);
+		user.setUser_addr(address);
+		
 		log.info("USER JOIN::{}", user.toString());
 		int check = userService.insertUser(user);
 		System.out.println("check:"+check);

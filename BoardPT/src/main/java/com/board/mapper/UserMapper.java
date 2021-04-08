@@ -5,28 +5,28 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.board.dto.UserDto;
+import com.board.dto.User;
 
 @Mapper
 public interface UserMapper {
 	
-	public int insertUser(UserDto userVO);
+	public int insertUser(User user);
 	
-	public int countUserById(String id);
+	public int countUserById(String user_id);
 	
-	public String getPasswordById(String id);
+	public String getPasswordById(String user_id);
 	
-	public List<UserDto> getAllUsers(@Param("search") String search, @Param("startRow") int startRow, @Param("pageSize") int pageSize);
+	public List<User> getAllUsers(@Param("search") String search, @Param("startRow") int startRow, @Param("pageSize") int pageSize);
 
-	public UserDto getUserById(String id);
+	public User getUserById(String user_id);
 	
-	public int updateUser(UserDto userVO);
+	public int updateUser(User user);
 	
-	public int deleteUser(String id);
-	
-	
+	public int deleteUser(String user_id);
 	
 	
-	public int insertLoginReg(String id, String ip);
+	
+	
+	public int insertLoginReg(String logn_id, String logn_ip);
 	
 }

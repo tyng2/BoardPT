@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.board.dto.BbsFileDto;
-import com.board.dto.BoardDto;
-import com.board.dto.CommentDto;
+import com.board.dto.Board;
+import com.board.dto.BoardFile;
+import com.board.dto.Comment;
 import com.board.mapper.BoardMapper;
 
 @Service
@@ -29,8 +29,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int insertBoard(BoardDto boardVO) {
-		return boardMapper.insertBoard(boardVO);
+	public int insertBoard(Board board) {
+		return boardMapper.insertBoard(board);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		int startRow = (pageNum - 1) * pageSize; 		// 페이지의 시작 행 번호
 		
-		List<BoardDto> boardList = boardMapper.getBoards(search, category, pageSize, startRow);
+		List<Board> boardList = boardMapper.getBoards(search, category, pageSize, startRow);
 		
 		int allRowCount = boardMapper.getBoardCount(search, category);		// 화면 표시되는 모든 게시글 개수
 		
@@ -77,12 +77,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDto> getBoardsMain(int pageSize, int startRow) {
+	public List<Board> getBoardsMain(int pageSize, int startRow) {
 		return boardMapper.getBoardsMain(pageSize, startRow);
 	}
 
 	@Override
-	public List<BoardDto> getBoardsOrderByHit(int pageSizeHit) {
+	public List<Board> getBoardsOrderByHit(int pageSizeHit) {
 		return boardMapper.getBoardsOrderByHit(pageSizeHit);
 	}
 
@@ -95,16 +95,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Map<String, Object> getBoardByNum(int num, String sessionID) {
 		Map<String, Object> resultMap = new HashMap<>();
-		BoardDto resultBoard = boardMapper.getBoardByNum(num); 
+		Board resultBoard = boardMapper.getBoardByNum(num); 
 		log.info("num, sessionID : {}, {}", num, sessionID);
-		if (!resultBoard.getId().equals(sessionID)) {
+		if (!resultBoard.getUser_id().equals(sessionID)) {
 			boardMapper.updateHit(num);
 		}
 		
-		List<CommentDto> commentList	= boardMapper.getCommentByBoardNum(num);
+		List<Comment> commentList	= boardMapper.getCommentByBoardNum(num);
 		log.info("comment : {}", commentList.toString());
 		
-		List<BbsFileDto> fileList	= boardMapper.selectFileByBoardNum(num);
+		List<BoardFile> fileList	= boardMapper.selectFileByBoardNum(num);
 		
 		resultMap.put("resultBoard"	, resultBoard);
 		resultMap.put("commentList"	, commentList);
@@ -115,14 +115,14 @@ public class BoardServiceImpl implements BoardService {
 
 	
 	@Override
-	public List<CommentDto> getCommentByBoardNum(int num) {
+	public List<Comment> getCommentByBoardNum(int num) {
 		return boardMapper.getCommentByBoardNum(num);
 	}
 	
 
 	@Override
-	public int updateBoard(BoardDto boardVO) {
-		return boardMapper.updateBoard(boardVO);
+	public int updateBoard(Board board) {
+		return boardMapper.updateBoard(board);
 	}
 
 	@Transactional
@@ -146,10 +146,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Transactional
 	@Override
-	public void insertComment(CommentDto comment) {
+	public void insertComment(Comment comment) {
 		log.info("[ Insert Comment  ]");
 		boardMapper.insertComment(comment);
-		boardMapper.commentCount(comment.getNum());
+		boardMapper.commentCount(comment.getBord_numb());
 		
 	}
 	
@@ -172,8 +172,8 @@ public class BoardServiceImpl implements BoardService {
 	
 	/* File */
 	
-	public BbsFileDto selectFileByFileId(String fileId) {
-		BbsFileDto file = boardMapper.selectFileByFileId(fileId);
+	public BoardFile selectFileByFileId(String fileId) {
+		BoardFile file = boardMapper.selectFileByFileId(fileId);
 		
 		return file;
 	}

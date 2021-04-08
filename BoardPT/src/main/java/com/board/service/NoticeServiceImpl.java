@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.board.dto.NoticeDto;
+import com.board.dto.Notice;
 import com.board.mapper.NoticeMapper;
 
 @Service
@@ -21,13 +21,13 @@ public class NoticeServiceImpl implements NoticeService {
 	private NoticeMapper noticeMapper;
 	
 	@Override
-	public int insertNotice(NoticeDto noticeVO) {
+	public int insertNotice(Notice noticeVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	@Override
-	public List<NoticeDto> getNoticeList(int pageSize, int startRow) {
+	public List<Notice> getNoticeList(int pageSize, int startRow) {
 		log.info("<< NoticeServiceImpl // getNoticeList >>");
 		
 		return noticeMapper.getNotices(pageSize, startRow);
@@ -50,7 +50,7 @@ public class NoticeServiceImpl implements NoticeService {
 		
 		int startRow = (pageNum - 1) * pageSize; 		// 페이지의 시작 행 번호
 		
-		List<NoticeDto> noticeList = noticeMapper.getNotices(pageSize, startRow);
+		List<Notice> noticeList = noticeMapper.getNotices(pageSize, startRow);
 		int allRowCount = noticeMapper.getNoticeCount();
 		
 		int maxPage = allRowCount / pageSize + ((allRowCount % pageSize > 0) ? 1 : 0); // 페이지 블록 구하기
@@ -80,13 +80,13 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public NoticeDto getNoticeByNum(int num) {
+	public Notice getNoticeByNum(int num) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int updateNotice(NoticeDto noticeVO) {
+	public int updateNotice(Notice noticeVO) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

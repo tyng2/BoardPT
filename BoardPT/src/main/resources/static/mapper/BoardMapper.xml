@@ -6,145 +6,115 @@
 
 
 <select id="maxNumBoard" resultType="int">
-	SELECT MAX(num) FROM bbs 
+	SELECT MAX(bord_numb) FROM potl_bord 
 </select>
 
 <insert id="insertBoard">
-	INSERT INTO bbs
-	(num, category, title, content, id, reg_date, hit, re_ref, re_lev, re_seq, ip, fileCount, commentCount)  
-	VALUES (#{num},#{category},#{title},#{content},#{id},CURRENT_TIMESTAMP,0,#{re_ref},0,0,#{ip},0,0)
+	INSERT INTO potl_bord
+	(bord_numb, bord_catg, bord_titl, bord_cont, user_id, bord_date, bord_hitc, bord_refr, bord_levl, bord_seqn, bord_wrip, file_cont, comm_cont)  
+	VALUES (#{bord_numb},#{bord_catg},#{bord_titl},#{bord_cont},#{user_id},CURRENT_TIMESTAMP,0,#{bord_refr},0,0,#{bord_wrip},0,0)
 </insert>
 
 <!-- replyInsert 생략됨 -->
 
-<select id="getBoards" resultType="boardDto"><!-- getBoardsByCategory와 통합 -->
-	SELECT * FROM bbs 
-	<choose>
-	<when test="search != null and search != ''">
-		WHERE title LIKE CONCAT('%', #{search}, '%')
-		OR content LIKE CONCAT('%', #{search}, '%') 
-		<if test="category != null and category != ''">
-			AND category = #{category}
-		</if>
-	</when>
-	<otherwise>
-		<if test="category != null and category != ''">
-			WHERE category = #{category}
-		</if>
-	</otherwise>
-	</choose>
-<!-- 	<if test="search != null and search != ''"> -->
-<!-- 		WHERE title LIKE CONCAT('%', #{search}, '%') -->
-<!-- 		OR content LIKE CONCAT('%', #{search}, '%')  -->
-<!-- 		<if test="category != null and category != ''"> -->
-<!-- 			AND category = #{category} -->
-<!-- 		</if> -->
-<!-- 	</if> -->
-	ORDER BY re_ref DESC, re_lev ASC, re_seq ASC 
+<select id="getBoards" resultType="board"><!-- getBoardsByCategory와 통합 -->
+	SELECT * FROM potl_bord WHERE 1 = 1
+	<if test="search != null and search != ''">
+		AND bord_titl LIKE CONCAT('%', #{search}, '%')
+		OR bord_cont LIKE CONCAT('%', #{search}, '%') 
+	</if>
+	<if test="category != null and category != ''">
+		AND bord_catg = #{category}
+	</if>
+	ORDER BY bord_refr DESC, bord_levl ASC, bord_seqn ASC 
 	LIMIT #{pageSize} OFFSET #{startRow} 
 </select>
 
-<select id="getBoardsMain" resultType="boardDto">
-	SELECT * FROM bbs WHERE re_lev = 0
-	ORDER BY re_ref DESC
+<select id="getBoardsMain" resultType="board">
+	SELECT * FROM potl_bord WHERE bord_levl = 0
+	ORDER BY bord_refr DESC
 	LIMIT #{pageSize} OFFSET #{startRow}
 </select>
 
-<select id="getBoardsOrderByHit" resultType="boardDto">
-	SELECT * FROM bbs ORDER BY hit DESC
+<select id="getBoardsOrderByHit" resultType="board">
+	SELECT * FROM potl_bord ORDER BY bord_hitc DESC
 	LIMIT #{pageSizeHit}
 </select>
 
 <select id="getBoardCount" resultType="int"><!-- getCategoryCount와 통합 -->
-	SELECT COUNT(*) FROM bbs 
-	
-	<choose>
-	<when test="search != null and search != ''">
-		WHERE title LIKE CONCAT('%', #{search}, '%')
-		OR content LIKE CONCAT('%', #{search}, '%') 
-		<if test="category != null and category != ''">
-			AND category = #{category}
-		</if>
-	</when>
-	<otherwise>
-		<if test="category != null and category != ''">
-			WHERE category = #{category}
-		</if>
-	</otherwise>
-	</choose>
-	
-<!-- 	<if test="search != null and search != ''"> -->
-<!-- 		WHERE title LIKE CONCAT('%', #{search}, '%') -->
-<!-- 		OR content LIKE CONCAT('%', #{search}, '%')  -->
-<!-- 	</if> -->
-<!-- 	<if test="category != null and category != ''"> -->
-<!-- 		AND category = #{category} -->
-<!-- 	</if> -->
+	SELECT COUNT(bord_numb) FROM potl_bord WHERE 1 = 1
+	<if test="search != null and search != ''">
+		AND bord_titl LIKE CONCAT('%', #{search}, '%')
+		OR bord_cont LIKE CONCAT('%', #{search}, '%') 
+	</if>
+	<if test="category != null and category != ''">
+		AND bord_catg = #{category}
+	</if>
 </select>
 
 <!-- Board Detail -->
-<select id="getBoardByNum" resultType="boardDto">
-	SELECT * FROM bbs WHERE num = #{num} 
+<select id="getBoardByNum" resultType="board">
+	SELECT * FROM potl_bord WHERE bord_numb = #{bord_numb} 
 </select>
 
 <update id="updateHit">
-	UPDATE bbs SET hit = hit + 1
-	WHERE num = #{num} 
+	UPDATE potl_bord SET bord_hitc = bord_hitc + 1
+	WHERE bord_numb = #{bord_numb} 
 </update>
 <!-- Board Detail -->
 
-<update id="updateBoard" parameterType="boardDto">
-	UPDATE bbs
-	SET category = #{category}, title = #{title}, content = #{content} 
-	WHERE num = #{num}
+<update id="updateBoard" parameterType="board">
+	UPDATE potl_bord
+	SET bord_catg = #{bord_catg}, bord_titl = #{bord_titl}, bord_cont = #{bord_cont} 
+	WHERE bord_numb = #{bord_numb}
 </update>
 
 <!-- DELETE BOARD -->
 <delete id="deleteBoard">
-	DELETE FROM bbs WHERE num = #{num}
+	DELETE FROM potl_bord WHERE bord_numb = #{bord_numb}
 </delete>
 
 <select id="getCountFileByNum" resultType="int">
-	SELECT COUNT(num) FROM bbs_file WHERE num = #{num}
+	SELECT COUNT(bord_numb) FROM bord_file WHERE bord_numb = #{bord_numb}
 </select>
 
 <delete id="deleteFileByNum">
-	DELETE FROM bbs_file WHERE num = #{num}
+	DELETE FROM bord_file WHERE bord_numb = #{bord_numb}
 </delete>
 
 <select id="getCountCommentByNum" resultType="int">
-	SELECT COUNT(num) FROM comments WHERE num = #{num}
+	SELECT COUNT(bord_numb) FROM bord_comm WHERE bord_numb = #{bord_numb}
 </select>
 
 <delete id="deleteCommentByNum">
-	DELETE FROM comments WHERE num = #{num}
+	DELETE FROM bord_comm WHERE bord_numb = #{bord_numb}
 </delete>
 <!-- DELETE BOARD -->
 
 
 <!-- Comment -->
-<select id="getCommentByBoardNum" resultType="commentDto">
-	SELECT * FROM comments WHERE num = #{num}
+<select id="getCommentByBoardNum" resultType="comment">
+	SELECT * FROM bord_comm WHERE bord_numb = #{bord_numb}
 	ORDER BY commentId
 </select>
 
 <select id="getNumByCommentId" resultType="int">
-	SELECT num FROM comments WHERE commentId = #{commentId}
+	SELECT bord_numb FROM bord_comm WHERE commentId = #{commentId}
 </select>
 
-<insert id="insertComment">
-	INSERT INTO comments (commentId, num, id, content, reg_date) 
-	VALUES ((SELECT MAX(commentId)+1 FROM comments), #{num}, #{id}, #{content}, CURRENT_TIMESTAMP)
+<insert id="insertComment" parameterType="comment">
+	INSERT INTO bord_comm (comm_numb, bord_numb, user_id, comm_cont, comm_date) 
+	VALUES ((SELECT MAX(comm_numb)+1 FROM bord_comm), #{bord_numb}, #{user_id}, #{comm_cont}, CURRENT_TIMESTAMP)
 </insert>
 
 <update id="commentCount">
-	UPDATE bbs 
-	SET commentCount = (SELECT COUNT(*) FROM comments WHERE num = #{num}) 
-	WHERE num = #{num}
+	UPDATE potl_bord 
+	SET comm_cont = (SELECT COUNT(bord_numb) FROM bord_comm WHERE bord_numb = #{bord_numb}) 
+	WHERE bord_numb = #{bord_numb}
 </update>
 
 <delete id="deleteComment">
-	DELETE FROM comments WHERE commentId = #{commentId} 
+	DELETE FROM bord_comm WHERE comm_numb = #{comm_numb} 
 </delete>
 
 <!-- Comment -->
@@ -152,13 +122,13 @@
 
 
 <!-- File -->
-<select id="selectFileByBoardNum" resultType="bbsFileDto">
-	SELECT * FROM bbs_file WHERE num = #{num} 
-	ORDER BY fileId
+<select id="selectFileByBoardNum" resultType="boardFile">
+	SELECT * FROM bord_file WHERE bord_numb = #{bord_numb} 
+	ORDER BY file_numb
 </select>
 
-<select id="selectFileByFileId" resultType="bbsFileDto">
-	SELECT * FROM bbs_file WHERE fileId = #{fileId}
+<select id="selectFileByFileId" resultType="boardFile">
+	SELECT * FROM bord_file WHERE file_numb = #{file_numb}
 </select>
 
 <!-- File -->

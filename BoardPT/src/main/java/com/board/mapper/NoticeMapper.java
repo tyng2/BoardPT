@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import com.board.dto.NoticeDto;
+import com.board.dto.Notice;
 
 @Mapper
 @Repository
@@ -14,18 +14,18 @@ public interface NoticeMapper {
 	
 	public int maxNumNotice();
 	
-	public int insertNotice(NoticeDto noticeVO);
+	public int insertNotice(Notice notice);
 	
-	public List<NoticeDto> getNotices(@Param("pageSize") int pageSize, @Param("startRow") int startRow);
+	public List<Notice> getNotices(@Param("pageSize") int pageSize, @Param("startRow") int startRow);
 	
 	public int getNoticeCount();
 	
-	public NoticeDto getNoticeByNum(int num);
+	public Notice getNoticeByNum(int noti_numb);
 	
-	public int updateNotice(NoticeDto noticeVO);
+	public int updateNotice(Notice notice);
 	
-	public int deleteNotice(int num);
+	public int deleteNotice(int noti_numb);
 	
-	public int countNoticeByNum(int num);
+	public int countNoticeByNum(int noti_numb);
 
 }
