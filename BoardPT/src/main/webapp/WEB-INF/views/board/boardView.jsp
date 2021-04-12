@@ -42,22 +42,22 @@
 	<div class="row">
 	<div style="min-width: 100%;">
 		<div class="p-4 mb-3 bg-white" style="margin: 0;">
-			<p class="mb-0 font-weight-bold h2">${board.title } <span style="font-size: 18px"><span style="color: gray;">|</span> ${board.category }</span>
-			<span style="float: right; font-size: 15px;">No. ${board.num }</span></p>
-			<p class="mb-0" style="margin: 15px 0;"><b>${board.id }</b><span style="float: right;"><fmt:formatDate value="${board.reg_date }" pattern="yyyy.MM.dd HH:mm:ss"/></span></p>
+			<p class="mb-0 font-weight-bold h2">${board.bord_titl } <span style="font-size: 18px"><span style="color: gray;">|</span> ${board.bord_catg }</span>
+			<span style="float: right; font-size: 15px;">No. ${board.bord_numb }</span></p>
+			<p class="mb-0" style="margin: 15px 0;"><b>${board.user_id }</b><span style="float: right;"><fmt:formatDate value="${board.bord_date }" pattern="yyyy.MM.dd HH:mm:ss"/></span></p>
 		</div>
 		
 		<c:if test="${files.size() != 0 }">
 			<div class="p-4 mb-3 bg-white"><p class="mb-0"><br />
 			<c:forEach items="${files }" var="item" >
-				<a href="boardFileProcess.do?fileId=${item.fileId }" target="_blank"><button class="file themeBtn4">${item.orgl_file_nm }</button></a><br /><br />
+				<a href="boardFileProcess.do?fileId=${item.file_numb }" target="_blank"><button class="file themeBtn4">${item.file_olnm }</button></a><br /><br />
 			</c:forEach>
 			</p></div>
 		</c:if>
 					
 		<div class="p-4 mb-3 bg-white">
-			<p><pre style="font-family: 'Quicksand'; font-size: 15px; margin: 20px 0; min-height: 160px;">${board.content }</pre></p>
-			<p class="mb-4" style="text-align: right;">조회 : ${board.hit }</p>
+			<p><pre style="font-family: 'Quicksand'; font-size: 15px; margin: 20px 0; min-height: 160px;">${board.bord_cont }</pre></p>
+			<p class="mb-4" style="text-align: right;">조회 : ${board.bord_hitc }</p>
 		</div>
 		<div id="CommentAn"></div>
 		<div class="p-4 mb-3 bg-white">
@@ -66,9 +66,9 @@
 			<form action="boardComment.do" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				
-				<input type="hidden" name="num" id="num" value="${board.num }">
+				<input type="hidden" name="num" id="num" value="${board.bord_numb }">
 				<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-				<input type="hidden" name="category" id="category" value="${param.category }">
+				<input type="hidden" name="category" id="category" value="${param.bord_catg }">
 		
 				<c:if test="${sessionID != null }">
 				<textarea name="content" id="content" cols="30" rows="4"
@@ -82,21 +82,21 @@
 		<div class="p-4 mb-3">
 			<p style="text-align: right;" class="mb-0">
 			<c:if test="${sessionID != null }">
-				<c:if test="${sessionID.equals('admin') && !sessionID.equals(board.id) }">
-					<a href="boardDeleteProcess.do?num=${board.num }&pageNum=${param.pageNum }&category=${param.category }" class="btn btn-custom btn-md">삭제</a>
+				<c:if test="${sessionID.equals('admin') && !sessionID.equals(board.user_id) }">
+					<a href="boardDeleteProcess.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
 				</c:if>
-				<c:if test="${sessionID.equals(board.id) }">
-					<a href="boardModify.do?num=${board.num }&pageNum=${param.pageNum }&category=${param.category }" class="btn btn-custom btn-md">수정</a>
-					<a href="boardDeleteProcess.do?num=${board.num }&pageNum=${param.pageNum }&category=${param.category }" class="btn btn-custom btn-md">삭제</a>
+				<c:if test="${sessionID.equals(board.user_id) }">
+					<a href="boardModify.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">수정</a>
+					<a href="boardDeleteProcess.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
 				</c:if>
-				<a href="reply.do?re_ref=${board.re_ref }&re_lev=${board.re_lev }&re_seq=${board.re_seq }&category=${board.category }&pageNum=${param.pageNum }&pcategory=${param.category }" class="btn btn-custom btn-md">답글</a>
+				<a href="reply.do?re_ref=${board.bord_refr }&re_lev=${board.bord_levl }&re_seq=${board.bord_seqn }&category=${board.bord_catg }&pageNum=${param.pageNum }&pcategory=${param.bord_catg }" class="btn btn-custom btn-md">답글</a>
 			</c:if>
 			<c:choose>
-			<c:when test="${param.category == null }">
+			<c:when test="${param.bord_catg == null }">
 				<a href="board.do?pageNum=${param.pageNum }&#board" class="btn btn-custom btn-md">목록</a>
 			</c:when>
 			<c:otherwise>
-				<a href="board.do?category=${board.category }&pageNum=${param.pageNum }&#board" class="btn btn-custom btn-md">목록</a>
+				<a href="board.do?category=${board.bord_catg }&pageNum=${param.pageNum }&#board" class="btn btn-custom btn-md">목록</a>
 			</c:otherwise>
 			</c:choose>
 				

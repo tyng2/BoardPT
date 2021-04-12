@@ -64,39 +64,39 @@
 		<c:otherwise>
 		<c:forEach items="${list }" var="v">
 			<tr>
-			<td width="10%" class="category"><a href="board.do?category=${v.category }">${v.category }</a></td>
+			<td width="10%" class="category"><a href="board.do?category=${v.bord_catg }">${v.bord_catg }</a></td>
 			<td class="title1 left">
-			<c:if test="${v.re_lev > 0 }">
-				<c:forEach begin="1" end="${v.re_lev }">
+			<c:if test="${v.bord_levl > 0 }">
+				<c:forEach begin="1" end="${v.bord_levl }">
 					&nbsp;
 				</c:forEach>
 				<span id="reply">└</span>
 			</c:if>
-			<a href="boardView.do?num=${v.num }&pageNum=${pageInfoMap.pageNum }&#view">
-					${v.title }</a>
-			<c:if test="${v.fileCount > 0 }">
+			<a href="boardView.do?num=${v.bord_numb }&pageNum=${pageInfoMap.pageNum }&#view">
+					${v.bord_titl }</a>
+			<c:if test="${v.file_cont > 0 }">
 			<img src="images/disk.png" style="width: 14px;">
 			</c:if>
-			<c:if test="${v.commentCount > 0 }">
-			<b style="color: red;">[${v.commentCount }]</b>
+			<c:if test="${v.comm_cont > 0 }">
+			<b style="color: red;">[${v.comm_cont }]</b>
 			</c:if>
 			</td>
-			<td>${v.id }</td>
+			<td>${v.user_id }</td>
 			<td>
 			<jsp:useBean id="today" class="java.util.Date"></jsp:useBean>
 			<fmt:parseNumber value="${today.time / (1000 * 60 * 60 * 24)}" var="nowDays" integerOnly="true" />
-			<fmt:parseNumber value="${v.reg_date.time / (1000 * 60 * 60 * 24)}" var="regDays" integerOnly="true" />
+			<fmt:parseNumber value="${v.bord_date.time / (1000 * 60 * 60 * 24)}" var="regDays" integerOnly="true" />
 			<c:set value="${nowDays - regDays }" var="dayDiff" />
 			<c:choose>
 			<c:when test="${dayDiff == 0 }">
-			<fmt:formatDate value="${v.reg_date }" pattern="HH:mm:ss"/>
+			<fmt:formatDate value="${v.bord_date }" pattern="HH:mm:ss"/>
 			</c:when>
 			<c:otherwise>
-			<fmt:formatDate value="${v.reg_date }" pattern="yyyy.MM.dd"/>
+			<fmt:formatDate value="${v.bord_date }" pattern="yyyy.MM.dd"/>
 			</c:otherwise>
 			</c:choose>
 			</td>
-			<td>${v.hit }</td>
+			<td>${v.bord_hitc }</td>
 			</tr>
 		</c:forEach>
 		</c:otherwise>
@@ -168,7 +168,7 @@
 			<h3 class="h5 text-black mb-3">Popular Posts</h3>
 			<ul class="list-unstyled">
 				<c:forEach items="${hitList }" var="hl">
-				<li class="mb-2"><a href="boardView.do?num=${hl.num }&#view">${hl.title }</a></li>
+					<li class="mb-2"><a href="boardView.do?num=${hl.bord_numb }&#view">${hl.bord_titl }</a></li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -177,7 +177,7 @@
 			<h3 class="h5 text-black mb-3">Recent Comments</h3>
 			<ul class="list-unstyled">
 				<c:forEach items="${commentList }" var="cl">
-				<li class="mb-2"><a href="boardView.do?num=${cl.num }&#CommentAn">${cl.content }</a></li>
+					<li class="mb-2"><a href="boardView.do?num=${cl.bord_numb }&#CommentAn">${cl.comm_cont }</a></li>
 				</c:forEach>
 				<!-- <li class="mb-2"><a href="#">Joefrey</a> <em>in</em> <a
 					href="#">Lorem ipsum dolor sit amet</a></li>

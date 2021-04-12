@@ -49,11 +49,11 @@
 		    <artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 		
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-<!-- 		<dependency> -->
-<!-- 		    <groupId>com.h2database</groupId> -->
-<!-- 		    <artifactId>h2</artifactId> -->
-<!-- 		</dependency> -->
+<!-- 		https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
 		<dependency>

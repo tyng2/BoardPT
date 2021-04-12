@@ -67,10 +67,10 @@ public class BoardController {
 		paramMap.put("category", category);
 		
 		Map<String, Object> result			= boardService.getBoards(pageMap, paramMap);
-		List<Board> boardList			= (List<Board>) result.get("boardList");
+		List<Board> boardList				= (List<Board>) result.get("boardList");
 		Map<String, Integer> pageInfoMap	= (Map<String, Integer>) result.get("pageInfoMap");
 		
-		
+		log.info("BOARDLIST :: {}", boardList);
 		List<Board> hitList = boardService.getBoardsOrderByHit(HIT_PAGE_SIZE);
 		
 		model.addAttribute("pageInfoMap"	, pageInfoMap);
@@ -102,6 +102,11 @@ public class BoardController {
 			System.out.println(multipartFile.getOriginalFilename());
 		}
 		
+		HttpSession session = request.getSession();
+		String sessionID	= (String) session.getAttribute("sessionID");
+		sessionID			= (sessionID == null) ? "Unknown" : sessionID;
+		
+		
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdir();
@@ -110,7 +115,7 @@ public class BoardController {
 		
 		Board board = new Board();
 		
-		board.setUser_id(paramMap.get("userId"));
+		board.setUser_id(sessionID);
 		board.setBord_catg(paramMap.get("categy"));
 		board.setBord_titl(paramMap.get("title"));
 		board.setBord_cont(paramMap.get("content"));
@@ -146,6 +151,10 @@ public class BoardController {
 			log.info("BbsFile/" + bbsFileVO);
 		}
 		 */
+		
+		int count = boardService.insertBoard(board);
+		
+		log.info("INSERT BOARD :: {} // {}", count, board);
 		
 		return "redirect:/board.do";
 	}
@@ -256,6 +265,12 @@ public class BoardController {
 			jObj.put("id"			, comm.getUser_id());
 			jObj.put("content"		, comm.getComm_cont());
 			jObj.put("reg_date"		, comm.getComm_date());
+			
+//			jObj.put("comm_numb"	, comm.getComm_numb());
+//			jObj.put("bord_numb"	, comm.getBord_numb());
+//			jObj.put("user_id"		, comm.getUser_id());
+//			jObj.put("comm_cont"	, comm.getComm_cont());
+//			jObj.put("comm_date"	, comm.getComm_date());
 			
 			jArr.add(jObj);
 		}

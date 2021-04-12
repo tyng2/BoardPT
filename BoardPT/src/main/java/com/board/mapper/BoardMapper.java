@@ -51,7 +51,7 @@ public interface BoardMapper {
 	
 	public List<Comment> getCommentByBoardNum(int bord_numb);
 	
-	public int getNumByCommentId(int commentId);
+	public int getNumByCommentId(int comm_numb);
 	
 	public int insertComment(Comment comment);
 	

@@ -4,21 +4,26 @@ server:
     
 
 spring:
+  profiles:
+    active: h2
+#    active: maria
+    
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
     
   datasource:
-    driver-class-name : org.mariadb.jdbc.Driver
-    url               : jdbc:mariadb://10.0.0.2:3306/boardpt
-    username          : root
-    password          : root
+#    driver-class-name : org.mariadb.jdbc.Driver
+#    url               : jdbc:mariadb://10.0.0.2:3306/boardpt
+#    username          : root
+#    password          : root
+    
 #    driver-class-name : org.h2.Driver
 #    url               : jdbc:h2:C:/workspace/boardpt
 #    username          : sa
 #    password          : 
-#    hikari:
+    hikari:
 #      driver-class-name: org.mariadb.jdbc.Driver
 #      jdbc-url: jdbc:mariadb://10.0.0.2:3306/boardpt
 #      username: root
@@ -27,22 +32,23 @@ spring:
 #      jdbc-url: jdbc:h2:tcp://localhost/~/../../workspace/boardpt
 #      username: sa
 #      password: 
-#      maximum-pool-size: 30
+      maximum-pool-size : 30
+      pool-name         : BoardCP
 #      minimum-idle: 5
       
   
 #  h2:
 #    console:
-#      enabled: true
+#      enabled: false
 #      path    : /h2-console
 #      settings:
 #        web-allow-others: true
 
   servlet:
     multipart:
-      enabled: true
-      location: download
-      max-file-size: 100MB
+      enabled       : true
+      location      : download
+      max-file-size : 100MB
        
       
       
@@ -64,6 +70,32 @@ logging:
   
 file:
   path: download
+  
+---
+
+spring:
+  profiles: h2
+  
+  datasource:
+    driver-class-name : org.h2.Driver
+    url               : jdbc:h2:C:/workspace/boardpt
+    username          : sa
+    password          : 
+
+  
+---
+
+spring:
+  profiles: maria
+
+  datasource:
+    driver-class-name : org.mariadb.jdbc.Driver
+    url               : jdbc:mariadb://10.0.0.2:3306/boardpt
+    username          : root
+    password          : root
+    
+   
+
 
       
       

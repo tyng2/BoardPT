@@ -140,9 +140,9 @@
 	<c:forEach items="${noticeList }" var="n">
 		<div class="col-md-6 col-lg-4" onclick="location.href='notice.do';" style="cursor: pointer;">
 			<div class="p-3 box-with-humber">
-				<div class="number-behind">${n.num }.</div>
-				<h2>${n.title }</h2>
-				<p>${n.content }</p>
+				<div class="number-behind">${n.noti_numb }.</div>
+				<h2>${n.noti_titl }</h2>
+				<p>${n.noti_cont }</p>
 			</div>
 		</div>
 	</c:forEach>
@@ -164,18 +164,18 @@
 
 <c:forEach items="${boardList }" var="b">
 
-	<div style="cursor: pointer;" onclick="location.href='boardView.do?num=${b.num }&pageNum=1';">
+	<div style="cursor: pointer;" onclick="location.href='boardView.do?num=${b.bord_numb }&pageNum=1';">
 	<div class="testimonial">
 
 		<blockquote class="mb-5">
-			<h3>${b.title }</h3>
-			<p>&ldquo;${b.content }&rdquo;</p>
+			<h3>${b.bord_titl }</h3>
+			<p>&ldquo;${b.bord_cont }&rdquo;</p>
 		</blockquote>
 
 		<figure class="mb-4 d-flex align-items-center justify-content-center">
 			<div>
 			</div>
-			<p>${b.id }</p>
+			<p>${b.user_id }</p>
 		</figure>
 	</div>
 	</div>

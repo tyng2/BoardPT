@@ -1,4 +1,4 @@
-<%@page import="com.board.dto.BoardDto"%>
+<%@page import="com.board.dto.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
 
 <!-- content -->
 <%
-	BoardDto b = (BoardDto) request.getAttribute("board");
+	Board b = (Board) request.getAttribute("board");
 %>
 <section class="site-section bg-light">
 <div class="container">
@@ -59,13 +59,13 @@
 				<div class="col-md-6 mb-3 mb-md-0">
 					<label class="text-black" for="fname">Category</label><br>
 					<select class="form-control" name="categy">
-					<option <% if ("C".equals(b.getCategory())) {%>selected<%} %>>C</option>
-					<option <% if ("Java".equals(b.getCategory())) {%>selected<%} %>>Java</option>
-					<option <% if ("Python".equals(b.getCategory())) {%>selected<%} %>>Python</option>
-					<option <% if ("SQL".equals(b.getCategory())) {%>selected<%} %>>SQL</option>
-					<option <% if ("Web".equals(b.getCategory())) {%>selected<%} %>>Web</option>
-					<option <% if ("기타".equals(b.getCategory())) {%>selected<%} %>>기타</option>
-					<option <% if ("잡담".equals(b.getCategory())) {%>selected<%} %>>잡담</option>
+					<option <% if ("C".equals(b.getBord_catg())) {%>selected<%} %>>C</option>
+					<option <% if ("Java".equals(b.getBord_catg())) {%>selected<%} %>>Java</option>
+					<option <% if ("Python".equals(b.getBord_catg())) {%>selected<%} %>>Python</option>
+					<option <% if ("SQL".equals(b.getBord_catg())) {%>selected<%} %>>SQL</option>
+					<option <% if ("Web".equals(b.getBord_catg())) {%>selected<%} %>>Web</option>
+					<option <% if ("기타".equals(b.getBord_catg())) {%>selected<%} %>>기타</option>
+					<option <% if ("잡담".equals(b.getBord_catg())) {%>selected<%} %>>잡담</option>
 					</select>
 					<!-- <input type="text" id="fname" class="form-control"> -->
 				</div>

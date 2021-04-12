@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="com.board.dto.UserDto"%>
+<%@page import="com.board.dto.User"%>
 <!DOCTYPE html>
 <html lang="en"><!--  boardpage -->
 <head>
@@ -45,7 +45,7 @@ location.href="main.do";
 
 <!-- content -->
 <%
-UserDto m = (UserDto) request.getAttribute("member");
+User m = (User) request.getAttribute("member");
 %>
 <section class="site-section bg-light">
 <div class="container">
