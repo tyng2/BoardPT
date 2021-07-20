@@ -3,6 +3,8 @@ package com.board.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.board.dto.Board;
 import com.board.dto.Comment;
 import com.board.dto.BoardFile;
@@ -47,6 +49,8 @@ public interface BoardService {
 	/* File */
 	
 	public BoardFile selectFileByFileId(String fileId);
+	
+	public int insertFile(String bord_numb, MultipartFile[] files);
 	
 	
 	

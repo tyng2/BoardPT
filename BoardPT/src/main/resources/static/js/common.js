@@ -1,54 +1,67 @@
-//TimeStamp -> Date formatter
+//숫자 두 자리 자릿수 맞추기
+function select(num) {
+	if (num < 10) {
+		return '0' + num;
+	} else {
+		return num;
+	}
+}
+
+// query 내부의 input 파라미터 세팅
+function inpParam(query){
+	let param		= {};
+	
+	$(query).find('input').each(function() {
+		$this		= $(this);
+		name 		= $this.attr('name');
+		value		= $this.val();
+		
+		if (value == '') {
+			param = 1;
+			alert(name + ' 항목을 입력하세요.');
+			return false;
+		}
+		
+		param[name]	= value;
+
+	});
+	console.log('param::'+param);
+	return param;
+}
+
+//TimeStamp -> Date formatter (yyyy-mm-dd hh:mm:ss.s)
 function dateFormatter(date) {
-	// yyyy-mm-dd hh:mm:ss.s
-	var dateFormatt	= new Date( date );
+	let dateFormatt	 = new Date(date);
 	
-	var year	= dateFormatt.getFullYear();
+	let year		 = dateFormatt.getFullYear();
+	let month		 = select(dateFormatt.getUTCMonth()+1);
+	let day			 = select(dateFormatt.getUTCDate());
+
+	let hour		 = select(dateFormatt.getHours());
+	let minute		 = select(dateFormatt.getMinutes());
+	let seconds		 = select(dateFormatt.getSeconds());
+
+	let milliseconds = dateFormatt.getMilliseconds();
 	
-	var month	= 0;
-	if ( dateFormatt.getUTCMonth() < 9 ){
-		month	= '0'+ ( dateFormatt.getUTCMonth() + 1 ).toString();
-	} else {
-		month	= dateFormatt.getUTCMonth()+ 1;
-	}
-	var day		= dateFormatt.getUTCDate();
-
-	var hour	= 0;
-	if ( dateFormatt.getHours() < 10 ){
-		hour	= '0' + (dateFormatt.getHours()).toString();
-	} else {
-		hour	= dateFormatt.getHours();
-	}
-
-	var minute	= 0;
-	if ( dateFormatt.getMinutes() < 10 ){
-		minute	= '0' + ( dateFormatt.getMinutes()).toString();
-	} else {
-		minute	= dateFormatt.getMinutes();
-	}
-
-	var seconds	= 0;
-	if ( dateFormatt.getSeconds() < 10 ){
-		seconds	= '0' + (dateFormatt.getSeconds()).toString();
-	} else {
-		seconds	= dateFormatt.getSeconds();
-	}
-
-	var milliseconds = dateFormatt.getMilliseconds();
-	var fullDateFormatt;
-	fullDateFormatt = year +'-'+month+'-'+day+' '+hour+':'+minute+':'+seconds; // +'.'+milliseconds;
-	console.log ('DateFormat : ' + fullDateFormatt);
-	return fullDateFormatt;
+	return year+'-'+month+'-'+day+' '+hour+':'+minute+':'+seconds+'.'+milliseconds;
 }
 
 
-function ajaxAction(url, param, successFn){
+function ajaxAction(paramData){
 	$.ajax({
-		url		: url,
-		data	: param,
-		success	: function() {
-			successFn;
-		}
+		url			: paramData.url,
+		type		: paramData.type,
+		header		: {'x-kframe-ajax-call' : 'Y'},
+		dataType	: paramData.dataType,
+		data		: paramData.data,
+		success		: function(res) {
+			paramData.success(res);
+		},
+		error		: function(xhr, status, error) {
+			paramData.error(xhr, status, error);
+		},
+		beforeSend	: paramData.beforeSend,
+		complete	: paramData.complete
 	});
 }
 

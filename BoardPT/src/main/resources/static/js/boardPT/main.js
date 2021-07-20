@@ -36,16 +36,16 @@ $(document).ready(function() {
 			'name'	: name,
 			'url'	: url
 		};
-		$.ajax({
-			url: 'siteProcess.do',
-			type: 'post',
-			data: param,
-			success: function() {
+		ajaxAction({
+			url		: 'siteProcess.do',
+			type	: 'post',
+			data	: param,
+			success	: function() {
 				listSite();
-				var name = document.querySelector('#name');
-				name.value = '';
-				var url = document.querySelector('#url');
-				url.value = '';
+				var name	= document.querySelector('#name');
+				name.value	= '';
+				var url		= document.querySelector('#url');
+				url.value	= '';
 			}
 		});
 		$addSite = $('#addSite').removeAttr('disabled');
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 
 function listSite(){
-	$.ajax({
+	ajaxAction({
 		url: 'siteList.do',
 		success: function(result) {
 			
@@ -86,10 +86,10 @@ function delSite(i){
 	var param = {
 		'siteNum': siteNum	
 	};
-	$.ajax({
-		url: 'siteDelete.do',
-		data: param,
-		success: function() {
+	ajaxAction({
+		url		: 'siteDelete.do',
+		data	: param,
+		success	: function() {
 			listSite();
 		}
 	});

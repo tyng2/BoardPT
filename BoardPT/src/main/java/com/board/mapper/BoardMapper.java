@@ -65,6 +65,7 @@ public interface BoardMapper {
 	
 	public BoardFile selectFileByFileId(String file_numb);
 	
+	public int insertFile(List<BoardFile> fileList);
 	
 	/* File */
 	

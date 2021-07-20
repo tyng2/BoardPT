@@ -12,7 +12,7 @@
 <insert id="insertBoard">
 	INSERT INTO potl_bord
 	(bord_numb, bord_catg, bord_titl, bord_cont, user_id, bord_date, bord_hitc, bord_refr, bord_levl, bord_seqn, bord_wrip, file_cont, comm_cont)  
-	VALUES (IFNULL((SELECT MAX(bord_numb) FROM potl_bord)+1,1),
+	VALUES (IFNULL((SELECT MAX(innerPB.bord_numb) FROM potl_bord innerPB),0)+1,
 		#{bord_catg},#{bord_titl},#{bord_cont},#{user_id},CURRENT_TIMESTAMP,0,0,0,0,#{bord_wrip},0,0)
 </insert>
 
@@ -105,7 +105,7 @@
 
 <insert id="insertComment" parameterType="comment">
 	INSERT INTO bord_comm (comm_numb, bord_numb, user_id, comm_cont, comm_date) 
-	VALUES (IFNULL((SELECT MAX(comm_numb) FROM bord_comm)+1,1), 
+	VALUES (IFNULL((SELECT MAX(innerBC.comm_numb) FROM bord_comm innerBC),0)+1, 
 		#{bord_numb}, #{user_id}, #{comm_cont}, CURRENT_TIMESTAMP)
 </insert>
 
@@ -132,6 +132,16 @@
 <select id="selectFileByFileId" resultType="boardFile">
 	SELECT * FROM bord_file WHERE file_numb = #{file_numb}
 </select>
+
+<insert id="insertFile" parameterType="list">
+	INSERT INTO bord_file 
+		(file_numb, bord_numb, file_olnm, file_svnm, file_date)
+	VALUES 
+		<foreach item="item" index="idx" collection="fileList">
+			(IFNULL((SELECT MAX(innerFL.file_numb) FROM bord_file innerFL)+1,1),
+				#{item.bord_numb},#{item.file_olnm},#{item.file_svnm},#{item.file_date})
+		</foreach>
+</insert>
 
 <!-- File -->
 

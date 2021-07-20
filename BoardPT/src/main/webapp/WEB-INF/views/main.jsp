@@ -164,7 +164,7 @@
 
 <c:forEach items="${boardList }" var="b">
 
-	<div style="cursor: pointer;" onclick="location.href='boardView.do?num=${b.bord_numb }&pageNum=1';">
+	<div style="cursor: pointer;" onclick="location.href='boardView.do?bord_numb=${b.bord_numb }&pageNum=1';">
 	<div class="testimonial">
 
 		<blockquote class="mb-5">

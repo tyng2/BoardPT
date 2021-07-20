@@ -40,7 +40,7 @@
 
 <!-- content -->
 <%
-String category = (String) request.getParameter("category");
+String category = (String) request.getParameter("bord_catg");
 %>
 <div class="container">
 <div class="row">
@@ -136,7 +136,6 @@ function file_add(size, ext) {
 		obj.setAttribute("type", "file");
 		//obj.setAttribute("size", size);
 		obj.setAttribute("name", "bbs_file");
-// 		obj.setAttribute("name", "bbs_file" + (filecountTemp + 1));
 		obj.setAttribute("class", "form-control");
 		obj.setAttribute("id", "file" + (filecountTemp + 1));
 		parents.appendChild(obj);

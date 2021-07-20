@@ -1,5 +1,6 @@
 package com.board.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.board.dto.Board;
 import com.board.dto.BoardFile;
@@ -38,20 +40,20 @@ public class BoardServiceImpl implements BoardService {
 		log.info("<< BoardServiceImpl // getBoards >>");
 		Map<String, Object> result = new HashMap<>();
 		
-		int pageSize 		= pageMap.get("pageSize");					// 한 페이지의 게시글 개수
-		int pageBlockSize 	= pageMap.get("pageBlockSize");		// 한 페이지 블록을 구성하는 페이지 개수
+		int pageSize 		= pageMap.get("pageSize");				// 한 페이지의 게시글 개수
+		int pageBlockSize 	= pageMap.get("pageBlockSize");			// 한 페이지 블록을 구성하는 페이지 개수
 //		int pageSizeHit 	= pageMap.get("pageSizeHit");			// 조회순 정렬 게시글 페이지 노출 개수
 		
-		String strPageNum 	= (String) paramMap.get("pageNum");	// 시작 페이지 번호
+		String strPageNum 	= (String) paramMap.get("pageNum");		// 시작 페이지 번호
 		String search 		= (String) paramMap.get("search");		// 검색어
-		String category 	= (String) paramMap.get("category");
+		String category 	= (String) paramMap.get("bord_catg");
 		
 		strPageNum 	= (strPageNum == null | "".equals(strPageNum)) ? "1" : strPageNum;	// 시작 페이지 기본값 1
-		int pageNum = Integer.parseInt(strPageNum); 	// 페이지 번호
+		int pageNum = Integer.parseInt(strPageNum); 				// 페이지 번호
 		pageNum		= (pageNum <= 0) ? 1 : pageNum;
 		log.info("페이지 번호//" + strPageNum);
 		
-		int startRow = (pageNum - 1) * pageSize; 		// 페이지의 시작 행 번호
+		int startRow = (pageNum - 1) * pageSize; 					// 페이지의 시작 행 번호
 		
 		List<Board> boardList = boardMapper.getBoards(search, category, pageSize, startRow);
 		
@@ -176,6 +178,31 @@ public class BoardServiceImpl implements BoardService {
 		BoardFile file = boardMapper.selectFileByFileId(fileId);
 		
 		return file;
+	}
+
+	@Override
+	public int insertFile(String bord_numb, MultipartFile[] files) {
+		log.info("INSERT FILE! :: {}", files);
+		
+		List<BoardFile> fileList	= new ArrayList();
+		
+		BoardFile bFile		= null;
+		String file_olnm	= null;
+		String file_svnm	= null;
+		
+		for (MultipartFile mFile : files) {
+			bFile = new BoardFile();
+			
+			bFile.setBord_numb(Integer.parseInt(bord_numb));
+			bFile.setFile_olnm(mFile.getOriginalFilename());
+			
+		}
+		
+		
+		int count = boardMapper.insertFile(null);
+		
+		
+		return count;
 	}
 	
 	

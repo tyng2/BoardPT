@@ -62,9 +62,9 @@ public class BoardController {
 		pageMap.put("pageBlockSize"	, PAGE_BLOCK_SIZE);
 		pageMap.put("pageSizeHit"	, HIT_PAGE_SIZE);
 		
-		String category	= paramMap.get("category");
-		category 		= Common.null2space(category);			// 공백이 들어와도 null로 통일
-		paramMap.put("category", category);
+		String bord_catg	= paramMap.get("bord_catg");
+		bord_catg 		= Common.null2space(bord_catg);			// 공백이 들어와도 null로 통일
+		paramMap.put("bord_catg", bord_catg);
 		
 		Map<String, Object> result			= boardService.getBoards(pageMap, paramMap);
 		List<Board> boardList				= (List<Board>) result.get("boardList");
@@ -78,7 +78,7 @@ public class BoardController {
 		model.addAttribute("search"			, paramMap.get("search"));
 		model.addAttribute("hitList"		, hitList);
 		
-		if (category == null) {
+		if (bord_catg == null) {
 			return "board/board";
 		} else {
 			return "board/boardCategory";
@@ -95,13 +95,23 @@ public class BoardController {
 	
 	
 	@PostMapping("/boardWriteProcess.do")
-	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam("bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
+	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam(required = false, name = "bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
 		log.info("<< POST, boardWriteProcess.do >> : {}", paramMap);
-		
+		System.out.println("file/"+mFile);
+		int cnt = 0;
 		for (MultipartFile multipartFile : mFile) {
-			System.out.println(multipartFile.getOriginalFilename());
+			
+			if (multipartFile.isEmpty()) {
+				continue;
+				
+			} else {
+				cnt++;
+				
+			}
 		}
+		System.out.println("COUNT "+cnt);
 		
+		/*
 		HttpSession session = request.getSession();
 		String sessionID	= (String) session.getAttribute("sessionID");
 		sessionID			= (sessionID == null) ? "Unknown" : sessionID;
@@ -120,6 +130,8 @@ public class BoardController {
 		board.setBord_titl(paramMap.get("title"));
 		board.setBord_cont(paramMap.get("content"));
 		board.setBord_wrip(request.getRemoteAddr());
+		*/
+		
 		/*
 		MultipartRequest mRequest = new MultipartRequest(request, filePath, MAX_FILE_SIZE, "UTF-8", new DefaultFileRenamePolicy());
 		
@@ -152,24 +164,25 @@ public class BoardController {
 		}
 		 */
 		
-		int count = boardService.insertBoard(board);
 		
-		log.info("INSERT BOARD :: {} // {}", count, board);
+//		int count = boardService.insertBoard(board);
+//		
+//		log.info("INSERT BOARD :: {} // {}", count, board);
 		
 		return "redirect:/board.do";
 	}
 	
 	@GetMapping("/boardView.do")
 	public String boardView(@RequestParam Map<String, String> paramMap, HttpServletRequest request, Model model) {
-		log.info("<< GET, boardView.do >>");
+		log.info("<< GET, boardView.do >> :: {}", paramMap);
 		
 		HttpSession session	= request.getSession();
 		String sessionID 	= (String) session.getAttribute("sessionID");
 		log.info("sessionID : {}", sessionID);
-		String num = paramMap.get("num");
+		String bord_numb 	= paramMap.get("bord_numb");
 		int numInt = 0; 
 		try {
-			numInt = Integer.parseInt(num);
+			numInt = Integer.parseInt(bord_numb);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 			return "redirect:/board.do";
@@ -245,11 +258,11 @@ public class BoardController {
 	
 	@ResponseBody
 	@GetMapping("/comment.do")
-	public JSONArray boardComment(@RequestParam int num, Model model) {
-		log.info("<< GET, comment.do >> {}", num);
+	public JSONArray boardComment(@RequestParam int bord_numb, Model model) {
+		log.info("<< GET, comment.do >> {}", bord_numb);
 		
 		JSONArray jArr = null;
-		jArr = commentToJsonArr(boardService.getCommentByBoardNum(num));
+		jArr = commentToJsonArr(boardService.getCommentByBoardNum(bord_numb));
 		log.info(jArr.toString());
 		return jArr;
 	}
@@ -260,17 +273,17 @@ public class BoardController {
 		
 		for (Comment comm : list) {
 			jObj = new JSONObject();
-			jObj.put("commentId"	, comm.getComm_numb());
-			jObj.put("num"			, comm.getBord_numb());
-			jObj.put("id"			, comm.getUser_id());
-			jObj.put("content"		, comm.getComm_cont());
-			jObj.put("reg_date"		, comm.getComm_date());
+//			jObj.put("commentId"	, comm.getComm_numb());
+//			jObj.put("num"			, comm.getBord_numb());
+//			jObj.put("id"			, comm.getUser_id());
+//			jObj.put("content"		, comm.getComm_cont());
+//			jObj.put("reg_date"		, comm.getComm_date());
 			
-//			jObj.put("comm_numb"	, comm.getComm_numb());
-//			jObj.put("bord_numb"	, comm.getBord_numb());
-//			jObj.put("user_id"		, comm.getUser_id());
-//			jObj.put("comm_cont"	, comm.getComm_cont());
-//			jObj.put("comm_date"	, comm.getComm_date());
+			jObj.put("comm_numb"	, comm.getComm_numb());
+			jObj.put("bord_numb"	, comm.getBord_numb());
+			jObj.put("user_id"		, comm.getUser_id());
+			jObj.put("comm_cont"	, comm.getComm_cont());
+			jObj.put("comm_date"	, comm.getComm_date());
 			
 			jArr.add(jObj);
 		}
@@ -281,7 +294,7 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/insertComment.do")
 	public String insertComment(@RequestParam Map<String, String> paramMap, HttpServletRequest request) {
-		log.info("<< POST, insertComment.do >>");
+		log.info("<< POST, insertComment.do >> :: {}", paramMap);
 		
 		HttpSession session	= request.getSession();
 		String id 			= (String) session.getAttribute("sessionID");
@@ -290,13 +303,13 @@ public class BoardController {
 			id = "Unknown";
 		}
 		
-		int num 		= Integer.parseInt(paramMap.get("num"));
-		String content 	= paramMap.get("content");
+		int bord_numb 		= Integer.parseInt(paramMap.get("bord_numb"));
+		String comm_cont 	= paramMap.get("comm_cont");
 		
 		Comment comment = new Comment();
-		comment.setBord_numb(num);
+		comment.setBord_numb(bord_numb);
 		comment.setUser_id(id);
-		comment.setComm_cont(content);
+		comment.setComm_cont(comm_cont);
 		
 		boardService.insertComment(comment);
 		
@@ -305,10 +318,10 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping("/deleteComment.do")
-	public String deleteComment(@RequestParam int commentId) {
-		log.info("<< deleteComment.do {}>>", commentId);
+	public String deleteComment(@RequestParam int comm_numb) {
+		log.info("<< deleteComment.do {}>>", comm_numb);
 		
-		boardService.deleteComment(commentId);
+		boardService.deleteComment(comm_numb);
 		
 		return "";
 	}

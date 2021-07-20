@@ -79,13 +79,13 @@
  					<li><a href="notice.do">Notice</a></li>
 					<li class="has-children"><a href="board.do">Board</a>
 						<ul class="dropdown">
-							<li><a href="board.do?category=C">C</a></li>
-							<li><a href="board.do?category=Java">Java</a></li>
-							<li><a href="board.do?category=Python">Python</a></li>
-							<li><a href="board.do?category=SQL">SQL</a></li>
-							<li><a href="board.do?category=Web">Web</a></li>
-							<li><a href="board.do?category=기타">기타</a></li>
-							<li><a href="board.do?category=잡담">잡담</a></li>
+							<li><a href="board.do?bord_catg=C">C</a></li>
+							<li><a href="board.do?bord_catg=Java">Java</a></li>
+							<li><a href="board.do?bord_catg=Python">Python</a></li>
+							<li><a href="board.do?bord_catg=SQL">SQL</a></li>
+							<li><a href="board.do?bord_catg=Web">Web</a></li>
+							<li><a href="board.do?bord_catg=기타">기타</a></li>
+							<li><a href="board.do?bord_catg=잡담">잡담</a></li>
 						</ul></li>
 					<li><a href="boardChartForm.do">Stat</a></li>
 					<c:if test="${'admin' == sessionID }">

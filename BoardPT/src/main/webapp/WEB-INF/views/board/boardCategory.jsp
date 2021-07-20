@@ -38,7 +38,7 @@
 </div>
 
 <section class="site-section">
-<h2 class="text-black site-section-heading text-center" id="board">${param.category }</h2>
+<h2 class="text-black site-section-heading text-center" id="board">${param.bord_catg }</h2>
 
 <div class="container">
 <div class="row">
@@ -64,39 +64,39 @@
 		<c:otherwise>
 		<c:forEach items="${list }" var="v">
 			<tr>
-			<td width="5%">${v.num }</td>
+			<td width="5%">${v.bord_numb }</td>
 			<td class="title1 left">
-			<c:if test="${v.re_lev > 0 }">
-				<c:forEach begin="1" end="${v.re_lev }">
+			<c:if test="${v.bord_levl > 0 }">
+				<c:forEach begin="1" end="${v.bord_levl }">
 					&nbsp;
 				</c:forEach>
 				<span id="reply">└</span>
 			</c:if>
-			<a href="boardView.do?num=${v.num }&pageNum=${pageInfoMap.pageNum }&category=${v.category }&#view">
-					${v.title }</a>
-			<c:if test="${v.fileCount > 0 }">
+			<a href="boardView.do?bord_numb=${v.bord_numb }&pageNum=${pageInfoMap.pageNum }&bord_catg=${v.bord_catg }&#view">
+					${v.bord_titl }</a>
+			<c:if test="${v.file_cont > 0 }">
 			<img src="images/disk.png" style="width: 14px;">
 			</c:if>
-			<c:if test="${v.commentCount > 0 }">
-			<b style="color: red;">[${v.commentCount }]</b>
+			<c:if test="${v.comm_cont > 0 }">
+			<b style="color: red;">[${v.comm_cont }]</b>
 			</c:if>
 			</td>
-			<td>${v.id }</td>
+			<td>${v.user_id }</td>
 			<td>
 			<jsp:useBean id="today" class="java.util.Date"></jsp:useBean>
 			<fmt:parseNumber value="${today.time / (1000 * 60 * 60 * 24)}" var="nowDays" integerOnly="true" />
-			<fmt:parseNumber value="${v.reg_date.time / (1000 * 60 * 60 * 24)}" var="regDays" integerOnly="true" />
+			<fmt:parseNumber value="${v.bord_date.time / (1000 * 60 * 60 * 24)}" var="regDays" integerOnly="true" />
 			<c:set value="${nowDays - regDays }" var="dayDiff" />
 			<c:choose>
 			<c:when test="${dayDiff == 0 }">
-			<fmt:formatDate value="${v.reg_date }" pattern="HH:mm:ss"/>
+			<fmt:formatDate value="${v.bord_date }" pattern="HH:mm:ss"/>
 			</c:when>
 			<c:otherwise>
-			<fmt:formatDate value="${v.reg_date }" pattern="yyyy.MM.dd"/>
+			<fmt:formatDate value="${v.bord_date }" pattern="yyyy.MM.dd"/>
 			</c:otherwise>
 			</c:choose>
 			</td>
-			<td>${v.hit }</td>
+			<td>${v.bord_hitc }</td>
 			</tr>
 		</c:forEach>
 		</c:otherwise>
@@ -116,8 +116,8 @@
 			<c:if test="${pageInfoMap.allRowCount > 0 }">
 
 			<c:if test="${pageInfoMap.startPage > pageInfoMap.pageBlockSize }">
-			<a href="board.do?category=${param.category }&pageNum=1&search=${search }&#board">1</a><span class="more-page">...</span>
-			<a href="board.do?category=${param.category }&pageNum=${pageInfoMap.startPage - 1 }&search=${search }&#board">
+			<a href="board.do?bord_catg=${param.bord_catg }&pageNum=1&search=${search }&#board">1</a><span class="more-page">...</span>
+			<a href="board.do?bord_catg=${param.bord_catg }&pageNum=${pageInfoMap.startPage - 1 }&search=${search }&#board">
 			<span class="pt"><img src="images/left-arrow.png" width="18px" height="18px"></span></a>
 			</c:if>
 
@@ -128,16 +128,16 @@
 			<span>${s.current }</span>
 			</c:when>
 			<c:otherwise>
-				<a href="board.do?category=${param.category }&pageNum=${s.current }&search=${search }&#board">${s.current }</a>
+				<a href="board.do?bord_catg=${param.bord_catg }&pageNum=${s.current }&search=${search }&#board">${s.current }</a>
 			</c:otherwise>
 			</c:choose>
 			</c:forEach>
 
 			<c:if test="${pageInfoMap.endPage < pageInfoMap.maxPage }">
-			<a href="board.do?category=${param.category }&pageNum=${pageInfoMap.endPage + 1 }&search=${search }&#board">
+			<a href="board.do?bord_catg=${param.bord_catg }&pageNum=${pageInfoMap.endPage + 1 }&search=${search }&#board">
 			<span class="pt"><img src="images/right-arrow.png" width="18px" height="18px"></span></a>
 			<span class="more-page">...</span>
-			<a href="board.do?category=${param.category }&pageNum=${pageInfoMap.maxPage }&search=${search }&#board">${pageInfoMap.maxPage }</a>
+			<a href="board.do?bord_catg=${param.bord_catg }&pageNum=${pageInfoMap.maxPage }&search=${search }&#board">${pageInfoMap.maxPage }</a>
 			</c:if>
 
 			</c:if>
@@ -147,13 +147,13 @@
 		
 		<p style="text-align: right;" class="mt-4">
 			<c:if test="${sessionID != null }">
-			<a href="boardWrite.do?category=${param.category }" class="btn btn-custom btn-md">글쓰기</a>
+			<a href="boardWrite.do?bord_catg=${param.bord_catg }" class="btn btn-custom btn-md">글쓰기</a>
 			</c:if>
 		</p>
 		
 		<h3 class="h5 text-black mb-3">Search</h3>
 		<form action="board.do" method="get">
-			<input type="hidden" name="category" value="${param.category }">
+			<input type="hidden" name="bord_catg" value="${param.bord_catg }">
 			<div class="form-group d-flex">
 				<input type="text" class="form-control" name="search"
 					placeholder="Search keyword and hit enter..." value="${search }">

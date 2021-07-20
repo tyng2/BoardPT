@@ -66,6 +66,7 @@ history.back();
 			
 			<div class="row form-group">
 				<div class="col-md-12"><br>
+				<!-- 
 				<span class="button-checkbox">
       					<button type="button" class="btn btn-lg" data-color="primary">로그인 상태 유지</button>
 			        <input type="checkbox" value="true" name="loginChk" class="hidden" style="display: none;" />

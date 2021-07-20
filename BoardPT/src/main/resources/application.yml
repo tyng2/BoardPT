@@ -13,29 +13,6 @@ spring:
       prefix: /WEB-INF/views/
       suffix: .jsp
     
-  datasource:
-#    driver-class-name : org.mariadb.jdbc.Driver
-#    url               : jdbc:mariadb://10.0.0.2:3306/boardpt
-#    username          : root
-#    password          : root
-    
-#    driver-class-name : org.h2.Driver
-#    url               : jdbc:h2:C:/workspace/boardpt
-#    username          : sa
-#    password          : 
-    hikari:
-#      driver-class-name: org.mariadb.jdbc.Driver
-#      jdbc-url: jdbc:mariadb://10.0.0.2:3306/boardpt
-#      username: root
-#      password: root
-#      driver-class-name: org.h2.Driver
-#      jdbc-url: jdbc:h2:tcp://localhost/~/../../workspace/boardpt
-#      username: sa
-#      password: 
-      maximum-pool-size : 30
-      pool-name         : BoardCP
-#      minimum-idle: 5
-      
   
 #  h2:
 #    console:
@@ -46,11 +23,8 @@ spring:
 
   servlet:
     multipart:
-      enabled       : true
-      location      : download
-      max-file-size : 100MB
-       
-      
+      max-file-size     : 100MB
+      max-request-size  : 100MB
       
     
 mybatis:
@@ -66,11 +40,19 @@ logging:
 #  pattern:
 #    console: "%-5level %d{HH:mm:ss.SSS} [%-40.40logger] %-3L / %-15.15M : %m%n"
 #    file: "LogFile_%d{yyyy-MM-dd}.log"
-  
-  
+
+
+#파일 업로드/다운로드 경로
 file:
-  path: download
+  path: file/
   
+#페이징처리 데이터
+page:
+  limit : 10
+  block : 5
+
+
+
 ---
 
 spring:
@@ -81,6 +63,14 @@ spring:
     url               : jdbc:h2:C:/workspace/boardpt
     username          : sa
     password          : 
+    
+    hikari:
+#      driver-class-name : org.h2.Driver
+#      jdbc-url          : jdbc:h2:tcp://localhost/~/../../workspace/boardpt
+#      username          : sa
+#      password          : 
+      maximum-pool-size : 30
+      pool-name         : H2CP
 
   
 ---
@@ -93,6 +83,14 @@ spring:
     url               : jdbc:mariadb://10.0.0.2:3306/boardpt
     username          : root
     password          : root
+    
+    hikari:
+#      driver-class-name : org.mariadb.jdbc.Driver
+#      jdbc-url          : jdbc:mariadb://10.0.0.2:3306/boardpt
+#      username          : root
+#      password          : root
+      maximum-pool-size : 30
+      pool-name         : MariaCP
     
    
 

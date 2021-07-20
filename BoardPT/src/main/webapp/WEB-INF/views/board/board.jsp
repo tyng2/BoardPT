@@ -64,7 +64,7 @@
 		<c:otherwise>
 		<c:forEach items="${list }" var="v">
 			<tr>
-			<td width="10%" class="category"><a href="board.do?category=${v.bord_catg }">${v.bord_catg }</a></td>
+			<td width="10%" class="category"><a href="board.do?bord_catg=${v.bord_catg }">${v.bord_catg }</a></td>
 			<td class="title1 left">
 			<c:if test="${v.bord_levl > 0 }">
 				<c:forEach begin="1" end="${v.bord_levl }">
@@ -72,7 +72,7 @@
 				</c:forEach>
 				<span id="reply">└</span>
 			</c:if>
-			<a href="boardView.do?num=${v.bord_numb }&pageNum=${pageInfoMap.pageNum }&#view">
+			<a href="boardView.do?bord_numb=${v.bord_numb }&pageNum=${pageInfoMap.pageNum }&#view">
 					${v.bord_titl }</a>
 			<c:if test="${v.file_cont > 0 }">
 			<img src="images/disk.png" style="width: 14px;">
@@ -144,10 +144,10 @@
 		</div>
 		
 		<p style="text-align: right;" class="mt-4">
-				<c:if test="${sessionID != null }">
+			<c:if test="${sessionID != null }">
 				<a href="boardWrite.do" class="btn btn-custom btn-md">글쓰기</a>
-				</c:if>
-			</p>
+			</c:if>
+		</p>
 		
 		<!--  boardpage -->
 	</div>
@@ -168,7 +168,7 @@
 			<h3 class="h5 text-black mb-3">Popular Posts</h3>
 			<ul class="list-unstyled">
 				<c:forEach items="${hitList }" var="hl">
-					<li class="mb-2"><a href="boardView.do?num=${hl.bord_numb }&#view">${hl.bord_titl }</a></li>
+					<li class="mb-2"><a href="boardView.do?bord_numb=${hl.bord_numb }&#view">${hl.bord_titl }</a></li>
 				</c:forEach>
 			</ul>
 		</div>
@@ -177,7 +177,7 @@
 			<h3 class="h5 text-black mb-3">Recent Comments</h3>
 			<ul class="list-unstyled">
 				<c:forEach items="${commentList }" var="cl">
-					<li class="mb-2"><a href="boardView.do?num=${cl.bord_numb }&#CommentAn">${cl.comm_cont }</a></li>
+					<li class="mb-2"><a href="boardView.do?bord_numb=${cl.bord_numb }&#CommentAn">${cl.comm_cont }</a></li>
 				</c:forEach>
 				<!-- <li class="mb-2"><a href="#">Joefrey</a> <em>in</em> <a
 					href="#">Lorem ipsum dolor sit amet</a></li>

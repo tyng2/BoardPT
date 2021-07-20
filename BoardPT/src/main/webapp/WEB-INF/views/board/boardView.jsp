@@ -66,12 +66,12 @@
 			<form action="boardComment.do" method="POST">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 				
-				<input type="hidden" name="num" id="num" value="${board.bord_numb }">
+				<input type="hidden" name="bord_numb" id="bord_numb" value="${board.bord_numb }">
 				<input type="hidden" name="pageNum" id="pageNum" value="${param.pageNum }">
-				<input type="hidden" name="category" id="category" value="${param.bord_catg }">
+				<input type="hidden" name="bord_catg" id="bord_catg" value="${param.bord_catg }">
 		
 				<c:if test="${sessionID != null }">
-				<textarea name="content" id="content" cols="30" rows="4"
+				<textarea name="comm_cont" id="comm_cont" cols="30" rows="4"
 					class="form-control" 
 					placeholder="Write your comment here..."></textarea><br>
 				<button type="button" id="insertComment" class="btn btn-custom btn-md" style="float: right;">등록</button>
@@ -83,11 +83,11 @@
 			<p style="text-align: right;" class="mb-0">
 			<c:if test="${sessionID != null }">
 				<c:if test="${sessionID.equals('admin') && !sessionID.equals(board.user_id) }">
-					<a href="boardDeleteProcess.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
+					<a href="boardDeleteProcess.do?bord_numb=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
 				</c:if>
 				<c:if test="${sessionID.equals(board.user_id) }">
-					<a href="boardModify.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">수정</a>
-					<a href="boardDeleteProcess.do?num=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
+					<a href="boardModify.do?bord_numb=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">수정</a>
+					<a href="boardDeleteProcess.do?bord_numb=${board.bord_numb }&pageNum=${param.pageNum }&category=${param.bord_catg }" class="btn btn-custom btn-md">삭제</a>
 				</c:if>
 				<a href="reply.do?re_ref=${board.bord_refr }&re_lev=${board.bord_levl }&re_seq=${board.bord_seqn }&category=${board.bord_catg }&pageNum=${param.pageNum }&pcategory=${param.bord_catg }" class="btn btn-custom btn-md">답글</a>
 			</c:if>
