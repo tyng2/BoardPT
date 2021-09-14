@@ -87,8 +87,11 @@ public class BoardController {
 	}
 	
 	@GetMapping("/boardWrite.do")
-	public String boardWrite(Model model) {
+	public String boardWrite(Model model, HttpServletRequest request) {
 		log.info("<< GET, boardWrite.do >>");
+		
+		HttpSession session = request.getSession();
+		log.info("session : "+session);
 		
 		
 		return "board/write";
