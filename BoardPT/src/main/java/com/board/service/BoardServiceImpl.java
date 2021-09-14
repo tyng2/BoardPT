@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService {
 		int endPage 	= startPage + pageBlockSize - 1;
 		endPage 		= (endPage > maxPage) ? maxPage : endPage;
 		
-		Map<String, Integer> pageInfoMap = new HashMap<>();			// 페이지 관련 데이터
+		Map<String, Integer> pageInfoMap = new HashMap<>();		// 페이지 관련 데이터
 		pageInfoMap.put("startPage"		, startPage);
 		pageInfoMap.put("endPage"		, endPage);
 		pageInfoMap.put("pageBlockSize"	, pageBlockSize);
@@ -72,8 +72,8 @@ public class BoardServiceImpl implements BoardService {
 		pageInfoMap.put("allRowCount"	, allRowCount);
 		pageInfoMap.put("pageNum"		, pageNum);
 		
-		result.put("pageInfoMap"	, pageInfoMap);		// 페이지 관련 데이터
-		result.put("boardList"		, boardList);			// 페이지 게시글 리스트
+		result.put("pageInfoMap", pageInfoMap);		// 페이지 관련 데이터
+		result.put("boardList"	, boardList);		// 페이지 게시글 리스트
 		
 		return result;
 	}

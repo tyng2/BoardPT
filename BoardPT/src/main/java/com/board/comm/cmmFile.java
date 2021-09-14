@@ -31,7 +31,8 @@ public class cmmFile {
 	}
 	
 	
-	public static String fileUpload(MultipartFile file) {	// 저장된 파일 이름을 리턴
+	// 실제 파일 생성 : 저장된 파일 이름을 리턴
+	public static String fileUpload(MultipartFile file) {
 		log.info("fileUpload!");
 		
 		String file_name	= file.getOriginalFilename();

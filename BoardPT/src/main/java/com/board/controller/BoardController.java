@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.board.comm.Common;
+import com.board.comm.cmmFile;
 import com.board.dto.Board;
 import com.board.dto.Comment;
 import com.board.service.BoardService;
@@ -63,7 +64,7 @@ public class BoardController {
 		pageMap.put("pageSizeHit"	, HIT_PAGE_SIZE);
 		
 		String bord_catg	= paramMap.get("bord_catg");
-		bord_catg 		= Common.null2space(bord_catg);			// 공백이 들어와도 null로 통일
+		bord_catg 			= Common.null2space(bord_catg);			// 공백이 들어와도 null로 통일
 		paramMap.put("bord_catg", bord_catg);
 		
 		Map<String, Object> result			= boardService.getBoards(pageMap, paramMap);
@@ -98,30 +99,41 @@ public class BoardController {
 	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam(required = false, name = "bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
 		log.info("<< POST, boardWriteProcess.do >> : {}", paramMap);
 		System.out.println("file/"+mFile);
-		int cnt = 0;
+		int cnt 				= 0;
+		List<String> svnmList 	= new ArrayList<>();  
 		for (MultipartFile multipartFile : mFile) {
 			
 			if (multipartFile.isEmpty()) {
+				System.out.println("!@#@!#!@#!@#!@#@!$EDSFDS");
 				continue;
 				
 			} else {
+				System.out.println("getName:"+multipartFile.getName());
+				System.out.println("getOriginalFilename:"+multipartFile.getOriginalFilename());
+				System.out.println("getResource:"+multipartFile.getResource());
+				System.out.println("getBytes:"+multipartFile.getBytes());
+				System.out.println("getSize:"+multipartFile.getSize());
+				System.out.println("getContentType:"+multipartFile.getContentType());
+				
+				svnmList.add(cmmFile.fileUpload(multipartFile));
 				cnt++;
 				
 			}
 		}
 		System.out.println("COUNT "+cnt);
 		
-		/*
 		HttpSession session = request.getSession();
 		String sessionID	= (String) session.getAttribute("sessionID");
 		sessionID			= (sessionID == null) ? "Unknown" : sessionID;
 		
 		
+		/*
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdir();
 			log.info(filePath + " 디렉터리 생성!");
 		}
+		*/
 		
 		Board board = new Board();
 		
@@ -130,7 +142,6 @@ public class BoardController {
 		board.setBord_titl(paramMap.get("title"));
 		board.setBord_cont(paramMap.get("content"));
 		board.setBord_wrip(request.getRemoteAddr());
-		*/
 		
 		/*
 		MultipartRequest mRequest = new MultipartRequest(request, filePath, MAX_FILE_SIZE, "UTF-8", new DefaultFileRenamePolicy());
@@ -165,9 +176,15 @@ public class BoardController {
 		 */
 		
 		
-//		int count = boardService.insertBoard(board);
-//		
-//		log.info("INSERT BOARD :: {} // {}", count, board);
+		int count = boardService.insertBoard(board);
+		
+		System.out.println("=-=-=-=-=-=-=-=-=");
+		for (String string : svnmList) {
+			System.out.println(string);
+			
+		}
+		
+		log.info("INSERT BOARD :: {} // {}", count, board);
 		
 		return "redirect:/board.do";
 	}

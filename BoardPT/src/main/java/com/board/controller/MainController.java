@@ -54,7 +54,7 @@ public class MainController {
 	public String main(Model model) {
 		log.info("main.do");
 		List<Board> boardList 	= boardService.getBoardsMain(BOARD_PAGE_SIZE, BOARD_START_ROW);
-		List<Notice> noticeList 	= noticeService.getNoticeList(NOTICE_PAGE_SIZE, NOTICE_START_ROW);
+		List<Notice> noticeList = noticeService.getNoticeList(NOTICE_PAGE_SIZE, NOTICE_START_ROW);
 		
 		model.addAttribute("boardList"	, boardList);
 		model.addAttribute("noticeList"	, noticeList);
