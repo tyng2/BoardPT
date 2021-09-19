@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,16 +92,32 @@ public class BoardController {
 		log.info("<< GET, boardWrite.do >>");
 		
 		HttpSession session = request.getSession();
-		log.info("session : "+session);
+		Object sessionID	= session.getAttribute("sessionID");
 		
+		log.info("sessionID : " + sessionID);
+		request.setAttribute("sessionID", sessionID);
+		if (sessionID == null) {
+			return "redirect:/board.do";
+		}
 		
 		return "board/write";
 	}
 	
 	
 	@PostMapping("/boardWriteProcess.do")
-	public String boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam(required = false, name = "bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
+	public ResponseEntity<String> boardWriteProcess(@RequestParam Map<String, String> paramMap, @RequestParam(required = false, name = "bbs_file") MultipartFile[] mFile, HttpServletRequest request, Model model) throws IOException {
 		log.info("<< POST, boardWriteProcess.do >> : {}", paramMap);
+		
+		ResponseEntity<String> res = null;
+		
+		HttpSession session = request.getSession();
+		String sessionID	= (String) session.getAttribute("sessionID");
+		
+		if (sessionID == null) {
+			res = Common.respEnt("로그인 후 작성가능합니다.", "/login.do");
+			return res;
+		}
+		
 		System.out.println("file/"+mFile);
 		int cnt 				= 0;
 		List<String> svnmList 	= new ArrayList<>();  
@@ -111,12 +128,12 @@ public class BoardController {
 				continue;
 				
 			} else {
-				System.out.println("getName:"+multipartFile.getName());
-				System.out.println("getOriginalFilename:"+multipartFile.getOriginalFilename());
-				System.out.println("getResource:"+multipartFile.getResource());
-				System.out.println("getBytes:"+multipartFile.getBytes());
-				System.out.println("getSize:"+multipartFile.getSize());
-				System.out.println("getContentType:"+multipartFile.getContentType());
+				System.out.println("getName:"				+multipartFile.getName());
+				System.out.println("getOriginalFilename:"	+multipartFile.getOriginalFilename());
+				System.out.println("getResource:"			+multipartFile.getResource());
+				System.out.println("getBytes:"				+multipartFile.getBytes());
+				System.out.println("getSize:"				+multipartFile.getSize());
+				System.out.println("getContentType:"		+multipartFile.getContentType());
 				
 				svnmList.add(cmmFile.fileUpload(multipartFile));
 				cnt++;
@@ -125,9 +142,6 @@ public class BoardController {
 		}
 		System.out.println("COUNT "+cnt);
 		
-		HttpSession session = request.getSession();
-		String sessionID	= (String) session.getAttribute("sessionID");
-		sessionID			= (sessionID == null) ? "Unknown" : sessionID;
 		
 		
 		/*
@@ -189,7 +203,8 @@ public class BoardController {
 		
 		log.info("INSERT BOARD :: {} // {}", count, board);
 		
-		return "redirect:/board.do";
+		res = Common.respEnt(null, "/board.do");
+		return res;
 	}
 	
 	@GetMapping("/boardView.do")
